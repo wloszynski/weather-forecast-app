@@ -1,9 +1,10 @@
 .aside {
   grid-column: 1 / end;
+
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
   background-image: url("../img/sky.svg");
-  background-size: cover;
+  background-size: auto 120%;
   background-blend-mode: lighten;
 }
