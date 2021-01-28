@@ -1,12 +1,30 @@
 .selected-weather__container {
   grid-column: 1 / end;
   width: 100vw;
-  height: 15rem;
 
-  text-align: center;
+  height: 25rem;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  justify-items: center;
   align-items: center;
   align-content: center;
+
+  text-align: center;
+}
+
+.selected-weather {
+  &__temp {
+    line-height: 10rem;
+    font-size: 10rem;
+    font-weight: 300;
+
+    &-sup {
+      vertical-align: top;
+      font-size: 3rem;
+      position: relative;
+      top: -2rem;
+    }
+  }
 }

@@ -1,0 +1,17 @@
+.selected-weather__date {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  text-align: left;
+  width: 11rem;
+
+  &-img {
+    width: 5rem;
+
+    & img {
+      width: 100%;
+    }
+  }
+}
