@@ -11,6 +11,14 @@
       rel="stylesheet"
     />
 
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+      integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+      crossorigin="anonymous"
+    />
+
     <link rel="stylesheet" href="css/style.css" />
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png" /> -->
 
@@ -21,7 +29,7 @@
       <aside class="aside">
         <nav class="nav">
           <div class="nav__item">Notifications</div>
-          <div class="nav__item">Search</div>
+          <div class="nav__item"><i class="fas fa-search"></i> Search</div>
           <div class="nav__item nav__photo">
             <img src="./img/f-secure.svg" alt="f-secure logo" />
           </div>
@@ -36,7 +44,7 @@
             </div>
           </div>
         </div>
-        <div class="selected-weather__container">
+        <div class="selected-weather">
           <div class="selected-weather__date">
             <div class="selected-weather__date-img">
               <img src="./img/001-cloud.svg" alt="" />
@@ -49,22 +57,112 @@
           <span class="selected-weather__temp"
             >28<sup class="selected-weather__temp-sup">&#8451;</sup></span
           >
-          <br />
-          Poznan, Poland <br />
-          Feels like 32 * Sunset 20:15 <br />
-          Air quality: is not colorful
+          <span class="selected-weather__location">Poznan, Poland</span>
+          <span class="selected-weather__additional">
+            <span class="selected-weather__additional-feel"
+              >Feels like 32
+            </span>
+            <i class="far fa-dot-circle"></i>
+            <span class="additional-sunset"> Sunset 20:15</span>
+          </span>
+          <span class="selected-weather__air"> Air Quality Index: Good</span>
         </div>
         <div class="chance-of-rain__container">
-          <p>chance of rain</p>
+          <span class="chance-of-rain__info">Chance of rain: 59%</span>
         </div>
       </aside>
 
-      <div class="weather-information__container">
+      <div class="weather-information">
         <div class="weather-information__period">
-          Week Month 3 months 6 months
+          <a class="weather-information__period-item active">
+            <span>Week</span>
+          </a>
+          <a class="weather-information__period-item">
+            <span>Month</span>
+          </a>
+          <a class="weather-information__period-item">
+            <span>3 Months</span>
+          </a>
+          <a class="weather-information__period-item">
+            <span>6 Months</span>
+          </a>
         </div>
-        <div class="weather-information__details">
-          Sunday 54% słoneczko 15% 26%
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
+        </div>
+        <div class="weather-information__details-container">
+          <div class="weather-information__details">
+            <div class="weather-information-date">Sunday</div>
+            <div class="weather-information-rain">54%</div>
+            <div class="weather-information-sky">
+              <img src="./img/003-rainy.svg" alt="weather" />
+            </div>
+            <div class="weather-information-min">15<sup>&#8451;</sup></div>
+            <div class="weather-information-max">28<sup>&#8451;</sup></div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,20 +1,18 @@
-.selected-weather__container {
+.selected-weather {
   grid-column: 1 / end;
   width: 100vw;
 
-  height: 25rem;
+  height: 20rem;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   justify-items: center;
   align-items: center;
   align-content: center;
 
   text-align: center;
-}
 
-.selected-weather {
   &__temp {
     line-height: 10rem;
     font-size: 10rem;
@@ -26,5 +24,14 @@
       position: relative;
       top: -2rem;
     }
+  }
+
+  &__location {
+    font-size: 1.5rem;
+  }
+
+  &__additional,
+  &__air {
+    font-size: 1rem;
   }
 }

@@ -1,8 +1,46 @@
-.weather-information__container {
+.weather-information {
   grid-column: 1 / end;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100vw;
+
+  &__period {
+    display: flex;
+    width: 100vw;
+    padding: 1rem 2rem;
+    justify-content: space-around;
+
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    color: $color-grey;
+
+    & a {
+      cursor: pointer;
+    }
+    & .active {
+      color: black;
+    }
+  }
+
+  &__details-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__details {
+    display: flex;
+    padding: 1rem 2rem;
+    width: 100vw;
+    justify-content: space-around;
+  }
+
+  &-sky {
+    img {
+      height: 2rem;
+    }
+  }
 }

@@ -5,6 +5,7 @@
   grid-template-columns: repeat(4, 1fr);
 
   background-image: url("../img/sky.svg");
-  background-size: auto 120%;
-  background-blend-mode: lighten;
+  // background-image: url("../img/windows_wallpaper.jpg");
+  background-size: cover;
+  background-position: 50% 50%;
 }
