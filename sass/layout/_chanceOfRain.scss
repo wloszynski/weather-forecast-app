@@ -1,10 +1,8 @@
-.nav {
+.chance-of-rain__container {
   grid-column: 1 / end;
-  width: 100vw;
   height: 5rem;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  align-content: center;
 }

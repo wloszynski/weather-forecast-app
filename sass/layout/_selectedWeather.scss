@@ -1,10 +1,12 @@
-.nav {
+.selected-weather__container {
   grid-column: 1 / end;
   width: 100vw;
-  height: 5rem;
+  height: 15rem;
+
+  text-align: center;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   align-content: center;
 }

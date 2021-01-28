@@ -1,0 +1,8 @@
+.weather-information__container {
+  grid-column: 1 / end;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

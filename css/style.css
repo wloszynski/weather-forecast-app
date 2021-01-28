@@ -10,7 +10,7 @@ html {
 
 body {
   box-sizing: border-box;
-  background-color: white; }
+  background-color: plum; }
 
 a {
   color: inherit;
@@ -20,12 +20,65 @@ body {
   font-family: "Open Sans", sans-serif; }
 
 .nav {
+  font-size: 1.4rem;
+  font-weight: 600; }
+
+.aside {
+  color: white; }
+
+.nav__photo {
+  height: 4rem;
+  padding: 0.2rem; }
+  .nav__photo img {
+    height: 100%; }
+
+.aside {
   grid-column: 1 / end;
-  width: 100vw;
-  background-color: yellow;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background-image: url("../img/sky.svg");
+  background-size: cover;
+  background-blend-mode: lighten; }
+
+.city-selector__container {
+  grid-column: 1 / end;
+  height: 15rem;
   display: flex;
   justify-content: center;
   align-items: center; }
+
+.chance-of-rain__container {
+  grid-column: 1 / end;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.nav {
+  grid-column: 1 / end;
+  width: 100vw;
+  height: 5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center; }
+
+.selected-weather__container {
+  grid-column: 1 / end;
+  width: 100vw;
+  height: 15rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center; }
+
+.weather-information__container {
+  grid-column: 1 / end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
 
 #root {
   display: grid;

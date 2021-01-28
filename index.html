@@ -12,30 +12,42 @@
     />
 
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png" /> -->
 
-    <title>weather-fsecure</title>
+    <title>F-Secure Forecast</title>
   </head>
   <body>
     <div id="root">
-      <nav class="nav">nav</nav>
-      <div class="city-selector">city selector</div>
-      <div class="today-weather">
-        Today <br />
-        Sat, 3 Aug <br />
-        28%C <br />
-        Poznan, Poland <br />
-        Feels like 32 * Sunset 20:15 <br />
-        Air quality: is not colorful
-      </div>
-      <div class="chance-of-rain">chance of rain</div>
+      <aside class="aside">
+        <nav class="nav">
+          <div class="nav__item">Notifications</div>
+          <div class="nav__item">Search</div>
+          <div class="nav__item nav__photo">
+            <img src="./img/f-secure.svg" alt="f-secure logo" />
+          </div>
+        </nav>
+        <div class="city-selector__container">city selector</div>
+        <div class="selected-weather__container">
+          <div>
+            Today <br />
+            Sat, 3 Aug <br />
+            28%C <br />
+            Poznan, Poland <br />
+            Feels like 32 * Sunset 20:15 <br />
+            Air quality: is not colorful
+          </div>
+        </div>
+        <div class="chance-of-rain__container">
+          <p>chance of rain</p>
+        </div>
+      </aside>
 
-      <div class="weather-information-container">
+      <div class="weather-information__container">
         <div class="weather-information__period">
           Week Month 3 months 6 months
         </div>
-        <div class="weather-information-details">
-          Sundat 54% słoneczko 15% 26%
+        <div class="weather-information__details">
+          Sunday 54% słoneczko 15% 26%
         </div>
       </div>
     </div>
