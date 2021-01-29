@@ -83,20 +83,17 @@ class App {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    let airQuality = null;
-    let location = null;
+    let airQuality = await this.getAirQualityData(lat, lng).then(
+      (quality) => quality
+    );
 
-    await this.getAirQualityData(lat, lng).then((quality) => {
-      airQuality = quality;
-    });
-
-    await this.getLocation(lat, lng).then((loc) => {
-      location = loc;
-    });
+    let location = await this.getLocation(lat, lng).then((loc) => loc);
 
     const weatherData = await this.getWeatherData(lat, lng);
 
-    this.displayWidget(this.getWeatherWidgetObject(weatherData, location));
+    this.displayWidget(
+      this.getWeatherWidgetObject(weatherData, location, airQuality)
+    );
 
     this.displayForecasts(weatherData);
   }
@@ -216,12 +213,10 @@ class App {
   // Displaying weather forecast
   displayForecasts(weatherData) {
     let weatherForecasts = new Array();
-    console.log(weatherData);
 
     weatherData = weatherData.daily;
 
     for (const data of weatherData) {
-      console.log(data);
       const forecast = `
                 <div class="weather-information__details">
                   <div class="weather-information-date">${data.dt}</div>
