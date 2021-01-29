@@ -6,6 +6,7 @@
     grid-row: 1/2;
 
     height: 29rem;
+    width: 70rem;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -57,6 +58,10 @@
           max-width: 100%;
           border-radius: 20px;
           object-fit: cover;
+
+          transition: all 0.3s;
+        }
+        .active {
         }
       }
 
