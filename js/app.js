@@ -115,12 +115,9 @@ class App {
   // Getting user position -> lat and lng
   getPosition() {
     if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition(
-        this.loadData.bind(this),
-        function () {
-          alert("Could not get your position");
-        }
-      );
+      navigator.geolocation.getCurrentPosition(this.loadData.bind(this), () => {
+        this.loadData2(52.409538, 16.931992);
+      });
   }
 
   // Loading data -> weather, location, forecast,
