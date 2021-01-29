@@ -60,11 +60,56 @@ const forecastContainer = document.querySelector(
   ".weather-information__details-container"
 );
 
+// VARIABLES FOR IMAGES
+const citiesDiv = document.querySelectorAll(".select-place__city");
+
 class App {
   weatherWidget;
 
   constructor() {
+    // VARIABLES FOR CITIES LOCATIONS
+    const locations = new Array([
+      [52.409538, 16.931992],
+      [52.229676, 21.012229],
+      [60.192059, 24.945831],
+      [48.137154, 11.576124],
+      [40.73061, -73.935242],
+    ]);
+    let start = 0;
+
     this.getPosition();
+
+    // Adding Event Listeners
+
+    document
+      .querySelectorAll(".select-place__city")[0]
+      .addEventListener("click", () => {
+        this.loadData2(52.409538, 16.931992);
+      });
+
+    document
+      .querySelectorAll(".select-place__city")[1]
+      .addEventListener("click", () => {
+        this.loadData2(52.229676, 21.012229);
+      });
+
+    document
+      .querySelectorAll(".select-place__city")[2]
+      .addEventListener("click", () => {
+        this.loadData2(60.16952, 24.93545);
+      });
+
+    document
+      .querySelectorAll(".select-place__city")[3]
+      .addEventListener("click", () => {
+        this.loadData2(48.137154, 11.576124);
+      });
+
+    document
+      .querySelectorAll(".select-place__city")[4]
+      .addEventListener("click", () => {
+        this.loadData2(40.7127837, -74.0059413);
+      });
   }
 
   // Getting user position -> lat and lng
@@ -83,6 +128,22 @@ class App {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
+    let airQuality = await this.getAirQualityData(lat, lng).then(
+      (quality) => quality
+    );
+
+    let location = await this.getLocation(lat, lng).then((loc) => loc);
+
+    const weatherData = await this.getWeatherData(lat, lng);
+
+    await this.displayWidget(
+      this.getWeatherWidgetObject(weatherData, location, airQuality)
+    );
+
+    await this.displayForecasts(weatherData);
+  }
+  // Loading data -> weather, location, forecast,
+  async loadData2(lat, lng) {
     let airQuality = await this.getAirQualityData(lat, lng).then(
       (quality) => quality
     );

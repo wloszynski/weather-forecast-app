@@ -185,6 +185,7 @@ body {
         justify-content: flex-start;
         cursor: pointer; }
       .select-place__city {
+        height: 16rem;
         margin-right: 3rem; }
         .select-place__city-image {
           height: 14rem;
