@@ -273,18 +273,7 @@ class App {
 
   // Displaying data in widget section
   displayWidget(weatherWidget) {
-    let cloudy = 0;
-    if (weatherWidget.clouds < 20) {
-      cloudy = 0;
-    } else if (weatherWidget.clouds < 40) {
-      cloudy = 1;
-    } else if (weatherWidget.clouds < 60) {
-      cloudy = 2;
-    } else if (weatherWidget.clouds < 80) {
-      cloudy = 3;
-    } else if (weatherWidget.clouds < 100) {
-      cloudy = 4;
-    }
+    const cloudy = this.checkIfCloudy(weatherWidget.clouds);
 
     widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
     widgetLocation.textContent = weatherWidget.location;
@@ -303,21 +292,10 @@ class App {
 
     // Deleting 8th array
     weatherData = weatherData.daily.splice(0, 7);
-    let cloudy = 0;
 
     for (const data of weatherData) {
-      if (data.clouds < 20) {
-        cloudy = 0;
-      } else if (data.clouds < 40) {
-        cloudy = 1;
-      } else if (data.clouds < 60) {
-        cloudy = 2;
-      } else if (data.clouds < 80) {
-        cloudy = 3;
-      } else if (data.clouds < 100) {
-        cloudy = 4;
-      }
-      console.log(data);
+      const cloudy = this.checkIfCloudy(data.clouds);
+
       const forecast = `
                 <div class="weather-information__details">
                   <div class="weather-information-date">${this.getDayOfTheWeek(
@@ -344,6 +322,22 @@ class App {
     }
 
     forecastContainer.innerHTML = weatherForecasts.join(" ");
+  }
+
+  checkIfCloudy(cloudy) {
+    if (cloudy < 20) {
+      return 0;
+    } else if (cloudy < 40) {
+      return 1;
+    } else if (cloudy < 60) {
+      return 2;
+    } else if (cloudy < 80) {
+      return 3;
+    } else if (cloudy < 100) {
+      return 4;
+    }
+
+    return 0;
   }
 }
 
