@@ -12,10 +12,10 @@ html {
       font-size: 90%; } }
 
 body {
-  display: grid;
   box-sizing: border-box; }
   @media only screen and (min-width: 75em) {
     body {
+      display: grid;
       height: 100vh;
       width: 100vw; } }
 
@@ -79,6 +79,7 @@ body {
 
 .aside {
   grid-column: 1 / end;
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   background-image: url("../img/sky.svg");
@@ -107,17 +108,20 @@ body {
   height: 5rem;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  font-size: 1.1rem; }
 
 .nav {
   grid-column: 1 / end;
-  height: 5rem;
+  height: 7rem;
+  padding-top: 2rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   align-content: center; }
   @media only screen and (min-width: 75em) {
     .nav {
+      height: 5rem;
       padding: 5rem 0 0 0; }
       .nav__search {
         display: none; } }
@@ -126,10 +130,11 @@ body {
 
 .selected-weather {
   grid-column: 1 / end;
-  height: 20rem;
+  height: 35rem;
+  margin-top: -5rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-around;
   justify-items: center;
   align-items: center;
   align-content: center;
@@ -144,9 +149,14 @@ body {
       position: relative;
       top: -2rem; }
   .selected-weather__location {
-    font-size: 1.5rem; }
+    font-size: 2rem; }
   .selected-weather__additional, .selected-weather__air {
-    font-size: 1rem; }
+    font-size: 1.2rem; }
+  .selected-weather__additional {
+    width: 20rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; }
 
 .select-place {
   display: none; }
@@ -159,7 +169,7 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: space-evenly;
-      background-color: rgba(159, 212, 245, 0.4);
+      background-color: #f1fbff;
       padding: 2rem 2rem 1rem 2rem; }
       .select-place__search {
         display: flex;
@@ -182,21 +192,24 @@ body {
       .select-place__cities {
         height: 13rem;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
         cursor: pointer; }
-      .select-place__city-image {
-        height: 14rem;
-        width: 10rem; }
-        .select-place__city-image img {
+      .select-place__city {
+        height: 16rem;
+        margin-right: 3rem; }
+        .select-place__city-image {
           height: 14rem;
-          max-width: 100%;
-          border-radius: 20px;
-          object-fit: cover;
-          transition: all 0.3s; }
-      .select-place__city-name {
-        text-align: center; }
-        .select-place__city-name span {
-          font-weight: 600; } }
+          width: 10rem; }
+          .select-place__city-image img {
+            height: 14rem;
+            max-width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            transition: all 0.3s; }
+        .select-place__city-name {
+          text-align: center; }
+          .select-place__city-name span {
+            font-weight: 600; } }
 
 .weather-information {
   grid-column: 1 / -1;
@@ -204,7 +217,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(159, 212, 245, 0.4); }
+  background-color: #f1fbff; }
   .weather-information__period {
     display: flex;
     width: 100vw;
@@ -226,17 +239,17 @@ body {
     display: flex;
     padding: 1rem 2rem;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
     width: 100vw;
     font-size: 1.1rem; }
   .weather-information-date {
     width: 5.5rem; }
-  .weather-information-sky img, .weather-information-rain img {
-    height: 2rem; }
-  .weather-information-rain {
+  .weather-information-sky, .weather-information-rain, .weather-information-min, .weather-information-max {
     display: flex;
     align-items: center;
     justify-content: center; }
+    .weather-information-sky img, .weather-information-rain img, .weather-information-min img, .weather-information-max img {
+      height: 2rem; }
   @media only screen and (min-width: 75em) {
     .weather-information {
       grid-column: 1 / 7;
@@ -251,13 +264,16 @@ body {
           margin-right: 8rem; }
       .weather-information__details-container {
         padding-left: 2rem;
-        width: 100%; }
+        width: 100%;
+        height: 20rem; }
       .weather-information__details {
         width: 100%;
         padding: 0;
+        padding-bottom: 0.5rem;
         justify-content: flex-start; }
         .weather-information__details div {
-          width: 10rem; } }
+          width: 8rem;
+          margin-right: 4rem; } }
 
 #root {
   display: grid;
