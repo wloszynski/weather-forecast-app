@@ -254,6 +254,21 @@ class App {
   }
 
   // Convert date to Fri, Jan 29
+  getDayOfTheWeek(dt) {
+    const weekdays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const dayNum = new Date(dt * 1000).getDay();
+    return weekdays[dayNum];
+  }
+
+  // Convert dt to weekday
   shortDateFormat() {
     const fullDate = Date();
     const fullDateArray = fullDate.split(" ");
@@ -275,12 +290,15 @@ class App {
   displayForecasts(weatherData) {
     let weatherForecasts = new Array();
 
-    weatherData = weatherData.daily;
+    // Deleting 8th array
+    weatherData = weatherData.daily.splice(0, 7);
 
     for (const data of weatherData) {
       const forecast = `
                 <div class="weather-information__details">
-                  <div class="weather-information-date">${data.dt}</div>
+                  <div class="weather-information-date">${this.getDayOfTheWeek(
+                    data.dt
+                  )}</div>
                   <div class="weather-information-rain">
                     <img src="./img/drop.svg" alt="drop">
                     <span class="weather-information-rain__chance">${
