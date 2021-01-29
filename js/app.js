@@ -91,11 +91,11 @@ class App {
 
     const weatherData = await this.getWeatherData(lat, lng);
 
-    this.displayWidget(
+    await this.displayWidget(
       this.getWeatherWidgetObject(weatherData, location, airQuality)
     );
 
-    this.displayForecasts(weatherData);
+    await this.displayForecasts(weatherData);
   }
 
   // Getting location using lat and lng -> Wroclaw, PL
