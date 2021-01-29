@@ -100,7 +100,7 @@ class App {
 
   // Getting location using lat and lng -> Wroclaw, PL
   async getLocation(lat, lng) {
-    return fetch(
+    return await fetch(
       `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`
     )
       .then((response) => response.json())
@@ -109,7 +109,7 @@ class App {
   }
 
   async getWeatherData(lat, lng) {
-    return fetch(
+    return await fetch(
       `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
     )
       .then((response) => response.json())
@@ -122,7 +122,7 @@ class App {
   // Fetching Air Quality from OWM Air Pollution API
   // Returns Good / Fair / Moderate / Poor / Very Poor
   async getAirQualityData(lat, lng) {
-    return fetch(
+    return await fetch(
       `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=${API_KEY}`
     )
       .then((response) => response.json())
