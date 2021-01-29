@@ -250,7 +250,7 @@ class App {
   // Converting Unix dt to HH:MM
   convertUnixToTime(dt) {
     const date = new Date(dt * 1000);
-    return `${date.getHours()}: ${date.getMinutes()}`;
+    return `${date.getHours()}:${date.getMinutes()}`;
   }
 
   // Convert date to Fri, Jan 29
@@ -281,7 +281,7 @@ class App {
     widgetLocation.textContent = weatherWidget.location;
     widgetAirQuality.textContent = weatherWidget.airQuality;
     widgetChanceOfRain.textContent = weatherWidget.chanceOfRain;
-    widgetFeelsLike.textContent = weatherWidget.feelsLike;
+    widgetFeelsLike.textContent = weatherWidget.feelsLike.toFixed(1);
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
   }
