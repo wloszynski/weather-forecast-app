@@ -284,7 +284,7 @@ class App {
   // Displaying weather forecast
   displayForecasts(weatherData) {
     let weatherForecasts = new Array();
-
+    console.log(weatherData);
     // Deleting 8th array
     weatherData = weatherData.daily.splice(0, 7);
 

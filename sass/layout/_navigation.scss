@@ -1,6 +1,6 @@
 .nav {
   grid-column: 1 / end;
-  height: 5rem;
+  height: 7rem;
 
   display: flex;
   justify-content: space-around;
@@ -13,6 +13,8 @@
   }
 
   @include respond(tab-land) {
+    height: 5rem;
+
     padding: 5rem 0 0 0;
 
     &__search {
