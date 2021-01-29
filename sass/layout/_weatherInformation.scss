@@ -79,10 +79,14 @@
     &__details-container {
       padding-left: 2rem;
       width: 100%;
+      height: 19rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
     }
     &__details {
       width: 100%;
       padding: 0;
+      padding-bottom: 0.5rem;
       justify-content: flex-start;
 
       & div {

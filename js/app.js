@@ -54,24 +54,20 @@ const widgetChanceOfRain = document.querySelector(
   ".chance-of-rain__info-percentage"
 );
 const widgetDate = document.querySelector(".selected-weather__date-content");
+
+// VARIABLES FOR WEATHER FORECAST
+const forecastContainer = document.querySelector(
+  ".weather-information__details-container"
+);
+
 class App {
   weatherWidget;
+
   constructor() {
     this.getPosition();
-    this.weatherWidget = new WeatherWidget(
-      "Warsaw, Poland",
-      "24",
-      "90",
-      "99",
-      "Mon, 5 Aug",
-      "34",
-      "22:22",
-      "Very Poor"
-    );
-    this.displayWidget(this.weatherWidget);
   }
 
-  // Getting user position
+  // Getting user position -> lat and lng
   getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
@@ -83,16 +79,26 @@ class App {
   }
 
   // Loading data -> weather, location, forecast,
-  loadData(position) {
+  async loadData(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
-    let airQuality = null;
 
-    this.getAirQualityData(lat, lng).then((quality) => {
+    let airQuality = null;
+    let location = null;
+
+    await this.getAirQualityData(lat, lng).then((quality) => {
       airQuality = quality;
     });
 
-    this.getWeatherData(lat, lng);
+    await this.getLocation(lat, lng).then((loc) => {
+      location = loc;
+    });
+
+    const weatherData = await this.getWeatherData(lat, lng);
+
+    this.displayWidget(this.getWeatherWidgetObject(weatherData, location));
+
+    this.displayForecasts(weatherData);
   }
 
   // Getting location using lat and lng -> Wroclaw, PL
@@ -111,25 +117,14 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
-        const { temp, clouds, feels_like, sunset } = data.current;
-        this.displayWidget(
-          this.getWeatherWidgetObject(
-            "Poznan, Poland",
-            temp,
-            clouds,
-            "88",
-            "Mon, 6 Aug",
-            feels_like,
-            sunset,
-            "Poor"
-          )
-        );
+        return data;
       })
       .catch((err) => console.error(err));
   }
 
+  // Fetching Air Quality from OWM Air Pollution API
+  // Returns Good / Fair / Moderate / Poor / Very Poor
   getAirQualityData(lat, lng) {
-    // fetching air quality
     return fetch(
       `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=${API_KEY}`
     )
@@ -156,23 +151,15 @@ class App {
   }
 
   // Creating WeatherWidgetObject
-  getWeatherWidgetObject(
-    location,
-    temp,
-    clouds,
-    chanceOfRain,
-    date,
-    feelsLike,
-    sunset,
-    airQuality
-  ) {
+  getWeatherWidgetObject(data, location, airQuality) {
+    const { temp, clouds, feels_like, sunset, humidity } = data.current;
     return new WeatherWidget(
       location,
-      temp,
+      temp.toFixed(1),
       clouds,
-      chanceOfRain,
-      date,
-      feelsLike,
+      humidity,
+      this.shortDateFormat(),
+      feels_like,
       this.convertUnixToTime(sunset),
       airQuality
     );
@@ -199,10 +186,20 @@ class App {
     );
   }
 
+  // Creating WeatherForecast Array
+  getWeatherForecastArray() {}
+
   // Converting Unix dt to HH:MM
   convertUnixToTime(dt) {
     const date = new Date(dt * 1000);
     return `${date.getHours()}: ${date.getMinutes()}`;
+  }
+
+  // Convert date to Fri, Jan 29
+  shortDateFormat() {
+    const fullDate = Date();
+    const fullDateArray = fullDate.split(" ");
+    return `${fullDateArray[0]}, ${fullDateArray[1]} ${fullDateArray[2]}`;
   }
 
   // Displaying data in widget section
@@ -214,6 +211,41 @@ class App {
     widgetFeelsLike.textContent = weatherWidget.feelsLike;
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
+  }
+
+  // Displaying weather forecast
+  displayForecasts(weatherData) {
+    let weatherForecasts = new Array();
+    console.log(weatherData);
+
+    weatherData = weatherData.daily;
+
+    for (const data of weatherData) {
+      console.log(data);
+      const forecast = `
+                <div class="weather-information__details">
+                  <div class="weather-information-date">${data.dt}</div>
+                  <div class="weather-information-rain">
+                    <img src="./img/drop.svg" alt="drop">
+                    <span class="weather-information-rain__chance">${
+                      data.humidity
+                    }%</span>
+                  </div>
+                  <div class="weather-information-sky">
+                    <img src="./img/006-snowy.svg" alt="weather">
+                  </div>
+                  <div class="weather-information-min">${data.temp.min.toFixed(
+                    1
+                  )}<sup>℃</sup></div>
+                  <div class="weather-information-max">${data.temp.max.toFixed(
+                    1
+                  )}<sup>℃</sup></div>
+                </div>
+                `;
+      weatherForecasts.push(forecast);
+    }
+
+    forecastContainer.innerHTML = weatherForecasts.join(" ");
   }
 }
 
