@@ -3,8 +3,15 @@
 import { API_KEY } from "./config.js";
 
 class Weather {
-  constructor(location, temp, clouds, chanceOfRain) {}
+  constructor(location, temp, clouds, chanceOfRain) {
+    this.location = location;
+    this.temp = temp;
+    this.clouds = clouds;
+    this.chanceOfRain = chanceOfRain;
+  }
 }
+
+// class for the weather-widget div
 class WeatherWidget extends Weather {
   constructor(
     location,
@@ -16,8 +23,34 @@ class WeatherWidget extends Weather {
     airQuality
   ) {
     super(location, temp, clouds, chanceOfRain);
+    this.feelsLike = feelsLike;
+    this.sunset = sunset;
+    this.airQuality = airQuality;
   }
 }
+
+// class for the weather-information div
+class WeatherInformation extends Weather {
+  constructor(location, temp, clouds, chanceOfRain, minTemp, maxTemp) {
+    super(location, temp, clouds, chanceOfRain);
+    this.minTemp = minTemp;
+    this.maxTemp = maxTemp;
+  }
+}
+
+// VARIABLES FOR WIDGET
+const widgetTemp = document.querySelector(".selected-weather__temp");
+const widgetLocation = document.querySelector(".selected-weather__location");
+const widgetFeelsLike = document.querySelector(
+  ".selected-weather__additional-feel-temp"
+);
+const widgetSunset = document.querySelector(".additional-sunset-time");
+const widgetAirQuality = document.querySelector(
+  ".selected-weather__air-quality"
+);
+const widgetChanceOfRain = document.querySelector(
+  ".chance-of-rain__info-percentage"
+);
 
 class App {
   constructor() {
@@ -42,7 +75,6 @@ class App {
     let airQuality;
     this.getAirQualityData(latitude, longitude).then((quality) => {
       airQuality = quality;
-      console.log(airQuality);
     });
   }
 
