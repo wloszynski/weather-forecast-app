@@ -28,6 +28,7 @@
       & i {
         margin-left: 1rem;
         font-size: 2rem;
+        cursor: pointer;
       }
     }
 
@@ -46,6 +47,8 @@
       height: 13rem;
       display: flex;
       justify-content: space-evenly;
+
+      cursor: pointer;
     }
 
     &__city {
