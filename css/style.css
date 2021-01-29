@@ -79,7 +79,7 @@ body {
 
 .aside {
   grid-column: 1 / end;
-  height: 60rem;
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   background-image: url("../img/sky.svg");
