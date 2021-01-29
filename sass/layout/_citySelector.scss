@@ -1,4 +1,4 @@
-.city-selector__container {
+.city-selector {
   grid-column: 1 / end;
 
   height: 20rem;
@@ -8,4 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @include respond(tab-land) {
+    display: none;
+  }
 }

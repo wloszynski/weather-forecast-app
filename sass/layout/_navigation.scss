@@ -1,10 +1,22 @@
 .nav {
   grid-column: 1 / end;
-  width: 100vw;
   height: 5rem;
 
   display: flex;
   justify-content: space-around;
   align-items: center;
   align-content: center;
+
+  &__notification {
+    &-amount {
+    }
+  }
+
+  @include respond(tab-land) {
+    padding: 5rem 0 0 0;
+
+    &__search {
+      display: none;
+    }
+  }
 }

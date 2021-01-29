@@ -1,11 +1,11 @@
 .weather-information {
-  grid-column: 1 / end;
+  grid-column: 1 / -1;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  background-color: $color-blue-light;
 
   &__period {
     display: flex;
@@ -29,16 +29,16 @@
   &__details-container {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
   }
 
   &__details {
     display: flex;
     padding: 1rem 2rem;
-    width: 100vw;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    width: 100vw;
 
     font-size: 1.1rem;
   }
@@ -58,5 +58,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  @include respond(tab-land) {
+    grid-column: 1 / 7;
+    grid-row: 2/3;
+
+    height: 26rem;
+
+    &__period {
+      width: 100%;
+      justify-content: flex-start;
+      padding: 0 2rem 1rem 2;
+
+      & span {
+        margin-right: 8rem;
+      }
+    }
+
+    &__details-container {
+      padding-left: 2rem;
+      width: 100%;
+    }
+    &__details {
+      width: 100%;
+      padding: 0;
+      justify-content: flex-start;
+
+      & div {
+        width: 10rem;
+      }
+    }
   }
 }

@@ -1,11 +1,11 @@
 {
-	"folders": [
-		{
-			"path": "../.."
-		},
-		{
-			"path": "../../../../../Desktop/fonts"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "../.."
+    },
+    {
+      "path": "../../../../../Desktop/fonts"
+    }
+  ],
+  "settings": {}
 }
