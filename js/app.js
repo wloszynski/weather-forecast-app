@@ -301,8 +301,8 @@ class App {
 
                     <span class="weather-information-rain__chance">${
                       data.humidity
-                    }%</span>
-                     <img src="../img/humidity.svg" alt="drop">
+                    }% </span>
+                     <img src="../img/001-drop.svg" alt="drop">
                   </div>
                   <div class="weather-information-sky">
                     <img src="./img/${this.checkIfCloudy(
