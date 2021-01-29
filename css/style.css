@@ -232,8 +232,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: column;
-    text-align: center; }
+    flex-direction: column; }
   .weather-information__details {
     display: flex;
     padding: 1rem 2rem;
@@ -243,12 +242,12 @@ body {
     font-size: 1.1rem; }
   .weather-information-date {
     width: 5.5rem; }
-  .weather-information-sky img, .weather-information-rain img {
-    height: 2rem; }
-  .weather-information-rain {
+  .weather-information-sky, .weather-information-rain, .weather-information-min, .weather-information-max {
     display: flex;
     align-items: center;
     justify-content: center; }
+    .weather-information-sky img, .weather-information-rain img, .weather-information-min img, .weather-information-max img {
+      height: 2rem; }
   @media only screen and (min-width: 75em) {
     .weather-information {
       grid-column: 1 / 7;

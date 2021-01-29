@@ -273,8 +273,6 @@ class App {
 
   // Displaying data in widget section
   displayWidget(weatherWidget) {
-    const cloudy = this.checkIfCloudy(weatherWidget.clouds);
-
     widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
     widgetLocation.textContent = weatherWidget.location;
     widgetAirQuality.textContent = weatherWidget.airQuality;
@@ -283,7 +281,7 @@ class App {
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
 
-    widgetPhoto.src = `../img/${cloudy}.svg`;
+    widgetPhoto.src = `../img/${this.checkIfCloudy(weatherWidget.cloud)}.svg`;
   }
 
   // Displaying weather forecast
@@ -294,28 +292,33 @@ class App {
     weatherData = weatherData.daily.splice(0, 7);
 
     for (const data of weatherData) {
-      const cloudy = this.checkIfCloudy(data.clouds);
-
       const forecast = `
                 <div class="weather-information__details">
                   <div class="weather-information-date">${this.getDayOfTheWeek(
                     data.dt
                   )}</div>
                   <div class="weather-information-rain">
-                    <img src="../img/humidity.svg" alt="drop">
+
                     <span class="weather-information-rain__chance">${
                       data.humidity
                     }%</span>
+                     <img src="../img/humidity.svg" alt="drop">
                   </div>
                   <div class="weather-information-sky">
-                    <img src="./img/${cloudy}.svg" alt="weather">
+                    <img src="./img/${this.checkIfCloudy(
+                      data.clouds
+                    )}.svg" alt="weather">
                   </div>
                   <div class="weather-information-min">${data.temp.min.toFixed(
                     1
-                  )}<sup>℃</sup></div>
+                  )}<sup>℃</sup>
+                    <img src="../img/minTemp.svg" alt="drop">
+                  </div>
                   <div class="weather-information-max">${data.temp.max.toFixed(
                     1
-                  )}<sup>℃</sup></div>
+                  )}<sup>℃</sup>
+                    <img src="../img/maxTemp.svg" alt="drop">
+                  </div>
                 </div>
                 `;
       weatherForecasts.push(forecast);
@@ -324,6 +327,7 @@ class App {
     forecastContainer.innerHTML = weatherForecasts.join(" ");
   }
 
+  // Checking the cloud percentage and defining which photo should be selected
   checkIfCloudy(cloudy) {
     if (cloudy < 20) {
       return 0;
@@ -342,3 +346,16 @@ class App {
 }
 
 new App();
+
+// VARIABLES
+const aside = document.querySelector(".aside");
+
+// EVENT LISTENERS
+document.querySelector("#logo").addEventListener("click", () => {
+  // background-image: url("../img/windows_wallpaper.jpg");
+  if (aside.style.backgroundImage === 'url("../img/windows_wallpaper.jpg")') {
+    aside.style.backgroundImage = 'url("../img/sky.svg")';
+  } else {
+    aside.style.backgroundImage = 'url("../img/windows_wallpaper.jpg")';
+  }
+});
