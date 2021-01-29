@@ -46,12 +46,13 @@
     &__cities {
       height: 13rem;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: flex-start;
 
       cursor: pointer;
     }
 
     &__city {
+      margin-right: 3rem;
       &-image {
         height: 14rem;
         width: 10rem;
@@ -63,8 +64,6 @@
           object-fit: cover;
 
           transition: all 0.3s;
-        }
-        .active {
         }
       }
 
