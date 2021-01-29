@@ -31,9 +31,9 @@ class WeatherWidget extends Weather {
   }
 }
 
-// class for the weather-information div
-class WeatherInformation extends Weather {
-  constructor(location, temp, clouds, chanceOfRain, minTemp, maxTemp) {
+// class for the weather-forecast div
+class WeatherForecast extends Weather {
+  constructor(location, temp, clouds, date, chanceOfRain, minTemp, maxTemp) {
     super(location, temp, clouds, chanceOfRain, date);
     this.minTemp = minTemp;
     this.maxTemp = maxTemp;
@@ -71,7 +71,7 @@ class App {
     this.displayWidget(this.weatherWidget);
   }
 
-  // getting user position
+  // Getting user position
   getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
@@ -82,6 +82,7 @@ class App {
       );
   }
 
+  // Loading data -> weather, location, forecast,
   loadData(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
@@ -92,15 +93,15 @@ class App {
     });
 
     this.getWeatherData(lat, lng);
-    this.getLocation(lat, lng);
   }
 
+  // Getting location using lat and lng -> Wroclaw, PL
   getLocation(lat, lng) {
     return fetch(
       `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => console.log(data[0].name))
+      .then((data) => data[0].name)
       .catch((err) => console.error(err));
   }
 
@@ -110,12 +111,10 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.current);
         const { temp, clouds, feels_like, sunset } = data.current;
-
         this.displayWidget(
           this.getWeatherWidgetObject(
-            "Wroclaw, PL",
+            "Poznan, Poland",
             temp,
             clouds,
             "88",
@@ -127,8 +126,6 @@ class App {
         );
       })
       .catch((err) => console.error(err));
-
-    location, temp, clouds, chanceOfRain, date, feelsLike, sunset, airQuality;
   }
 
   getAirQualityData(lat, lng) {
@@ -158,6 +155,7 @@ class App {
       .catch((err) => console.error(err));
   }
 
+  // Creating WeatherWidgetObject
   getWeatherWidgetObject(
     location,
     temp,
@@ -180,12 +178,34 @@ class App {
     );
   }
 
+  // Creating WeatherForecast Object
+  getWeatherForecastObject(
+    location,
+    temp,
+    clouds,
+    date,
+    chanceOfRain,
+    minTemp,
+    maxTemp
+  ) {
+    return new WeatherForecast(
+      location,
+      temp,
+      clouds,
+      date,
+      chanceOfRain,
+      minTemp,
+      maxTemp
+    );
+  }
+
   // Converting Unix dt to HH:MM
   convertUnixToTime(dt) {
     const date = new Date(dt * 1000);
     return `${date.getHours()}: ${date.getMinutes()}`;
   }
 
+  // Displaying data in widget section
   displayWidget(weatherWidget) {
     widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
     widgetLocation.textContent = weatherWidget.location;
