@@ -80,7 +80,6 @@ class App {
     this.getPosition();
 
     // Adding Event Listeners
-
     document
       .querySelectorAll(".select-place__city")[0]
       .addEventListener("click", () => {
@@ -119,7 +118,6 @@ class App {
         this.loadData2(52.409538, 16.931992);
       });
   }
-
   // Loading data -> weather, location, forecast,
   async loadData(position) {
     const lat = position.coords.latitude;
