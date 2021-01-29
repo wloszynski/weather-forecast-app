@@ -19,6 +19,7 @@ class WeatherWidget extends Weather {
     temp,
     clouds,
     chanceOfRain,
+    date,
     feelsLike,
     sunset,
     airQuality
@@ -52,10 +53,22 @@ const widgetAirQuality = document.querySelector(
 const widgetChanceOfRain = document.querySelector(
   ".chance-of-rain__info-percentage"
 );
+const widgetDate = document.querySelector(".selected-weather__date-content");
 class App {
+  weatherWidget;
   constructor() {
     this.getPosition();
-    this.displayWidget();
+    this.weatherWidget = new WeatherWidget(
+      "Warsaw, Poland",
+      "24",
+      "90",
+      "99",
+      "Mon, 5 Aug",
+      "34",
+      "22:22",
+      "Very Poor"
+    );
+    this.displayWidget(this.weatherWidget);
   }
 
   // getting user position
@@ -72,8 +85,8 @@ class App {
   loadData(position) {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
+    let airQuality = null;
 
-    let airQuality;
     this.getAirQualityData(lat, lng).then((quality) => {
       airQuality = quality;
     });
@@ -93,11 +106,29 @@ class App {
 
   getWeatherData(lat, lng) {
     return fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
     )
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data.current);
+        const { temp, clouds, feels_like, sunset } = data.current;
+
+        this.displayWidget(
+          this.getWeatherWidgetObject(
+            "Wroclaw, PL",
+            temp,
+            clouds,
+            "88",
+            "Mon, 6 Aug",
+            feels_like,
+            sunset,
+            "Poor"
+          )
+        );
+      })
       .catch((err) => console.error(err));
+
+    location, temp, clouds, chanceOfRain, date, feelsLike, sunset, airQuality;
   }
 
   getAirQualityData(lat, lng) {
@@ -127,13 +158,42 @@ class App {
       .catch((err) => console.error(err));
   }
 
+  getWeatherWidgetObject(
+    location,
+    temp,
+    clouds,
+    chanceOfRain,
+    date,
+    feelsLike,
+    sunset,
+    airQuality
+  ) {
+    return new WeatherWidget(
+      location,
+      temp,
+      clouds,
+      chanceOfRain,
+      date,
+      feelsLike,
+      this.convertUnixToTime(sunset),
+      airQuality
+    );
+  }
+
+  // Converting Unix dt to HH:MM
+  convertUnixToTime(dt) {
+    const date = new Date(dt * 1000);
+    return `${date.getHours()}: ${date.getMinutes()}`;
+  }
+
   displayWidget(weatherWidget) {
-    widgetTemp.innerHTML = `${"22"}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
-    widgetLocation.textContent = "Warsaw, Poland";
-    widgetAirQuality.textContent = "Very Poor";
-    widgetChanceOfRain.textContent = "43";
-    widgetFeelsLike.textContent = "43";
-    widgetSunset.textContent = "22:22";
+    widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
+    widgetLocation.textContent = weatherWidget.location;
+    widgetAirQuality.textContent = weatherWidget.airQuality;
+    widgetChanceOfRain.textContent = weatherWidget.chanceOfRain;
+    widgetFeelsLike.textContent = weatherWidget.feelsLike;
+    widgetSunset.textContent = weatherWidget.sunset;
+    widgetDate.textContent = weatherWidget.date;
   }
 }
 
