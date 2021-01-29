@@ -8,4 +8,8 @@
   // background-image: url("../img/windows_wallpaper.jpg");
   background-size: cover;
   background-position: 50% 50%;
+
+  @include respond(tab-land) {
+    grid-column: 7 / 10;
+  }
 }

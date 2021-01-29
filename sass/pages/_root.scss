@@ -1,4 +1,9 @@
 #root {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+
+  @include respond(tab-land) {
+    grid-template-columns: repeat(9, 1fr);
+    padding: 4rem;
+  }
 }

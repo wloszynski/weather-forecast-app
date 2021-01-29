@@ -28,6 +28,8 @@
 
   &__details-container {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
   }
 
@@ -35,12 +37,26 @@
     display: flex;
     padding: 1rem 2rem;
     width: 100vw;
+    align-items: center;
     justify-content: space-around;
+
+    font-size: 1.1rem;
   }
 
-  &-sky {
+  &-date {
+    width: 5.5rem;
+  }
+
+  &-sky,
+  &-rain {
     img {
       height: 2rem;
     }
+  }
+
+  &-rain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
