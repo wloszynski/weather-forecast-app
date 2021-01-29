@@ -54,6 +54,7 @@ const widgetChanceOfRain = document.querySelector(
   ".chance-of-rain__info-percentage"
 );
 const widgetDate = document.querySelector(".selected-weather__date-content");
+const widgetPhoto = document.querySelector("#widgetPhoto");
 
 // VARIABLES FOR WEATHER FORECAST
 const forecastContainer = document.querySelector(
@@ -272,6 +273,19 @@ class App {
 
   // Displaying data in widget section
   displayWidget(weatherWidget) {
+    let cloudy = 0;
+    if (weatherWidget.clouds < 20) {
+      cloudy = 0;
+    } else if (weatherWidget.clouds < 40) {
+      cloudy = 1;
+    } else if (weatherWidget.clouds < 60) {
+      cloudy = 2;
+    } else if (weatherWidget.clouds < 80) {
+      cloudy = 3;
+    } else if (weatherWidget.clouds < 100) {
+      cloudy = 4;
+    }
+
     widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
     widgetLocation.textContent = weatherWidget.location;
     widgetAirQuality.textContent = weatherWidget.airQuality;
@@ -279,29 +293,44 @@ class App {
     widgetFeelsLike.textContent = weatherWidget.feelsLike.toFixed(1);
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
+
+    widgetPhoto.src = `../img/${cloudy}.svg`;
   }
 
   // Displaying weather forecast
   displayForecasts(weatherData) {
     let weatherForecasts = new Array();
-    console.log(weatherData);
+
     // Deleting 8th array
     weatherData = weatherData.daily.splice(0, 7);
+    let cloudy = 0;
 
     for (const data of weatherData) {
+      if (data.clouds < 20) {
+        cloudy = 0;
+      } else if (data.clouds < 40) {
+        cloudy = 1;
+      } else if (data.clouds < 60) {
+        cloudy = 2;
+      } else if (data.clouds < 80) {
+        cloudy = 3;
+      } else if (data.clouds < 100) {
+        cloudy = 4;
+      }
+      console.log(data);
       const forecast = `
                 <div class="weather-information__details">
                   <div class="weather-information-date">${this.getDayOfTheWeek(
                     data.dt
                   )}</div>
                   <div class="weather-information-rain">
-                    <img src="./img/drop.svg" alt="drop">
+                    <img src="../img/humidity.svg" alt="drop">
                     <span class="weather-information-rain__chance">${
                       data.humidity
                     }%</span>
                   </div>
                   <div class="weather-information-sky">
-                    <img src="./img/006-snowy.svg" alt="weather">
+                    <img src="./img/${cloudy}.svg" alt="weather">
                   </div>
                   <div class="weather-information-min">${data.temp.min.toFixed(
                     1
