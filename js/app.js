@@ -355,7 +355,9 @@ document.querySelector("#logo").addEventListener("click", () => {
   // background-image: url("../img/windows_wallpaper.jpg");
   if (aside.style.backgroundImage === 'url("../img/landscape-light.svg")') {
     aside.style.backgroundImage = 'url("../img/sky.svg")';
+    aside.style.color = "white";
   } else {
     aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
+    aside.style.color = "#0008";
   }
 });

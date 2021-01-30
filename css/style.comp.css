@@ -69,13 +69,13 @@ body {
   align-items: center;
   align-content: center;
   text-align: left;
-  width: 11rem; }
+  width: 11.5rem; }
   .selected-weather__date-img {
     width: 5rem; }
     .selected-weather__date-img img {
       width: 100%; }
   .selected-weather__date-name {
-    font-size: 1.6rem; }
+    font-size: 2rem; }
 
 .aside {
   grid-column: 1 / end;
@@ -84,7 +84,8 @@ body {
   grid-template-columns: repeat(4, 1fr);
   background-image: url("../img/sky.svg");
   background-size: cover;
-  background-position: 50% 50%; }
+  background-position: 50% 50%;
+  transition: background-image 0.5s; }
   @media only screen and (min-width: 75em) {
     .aside {
       grid-column: 7 / 10;
@@ -109,7 +110,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.1rem; }
+  font-size: 2rem; }
 
 .nav {
   grid-column: 1 / end;
@@ -149,14 +150,19 @@ body {
       position: relative;
       top: -2rem; }
   .selected-weather__location {
-    font-size: 2rem; }
+    font-size: 2.5rem; }
   .selected-weather__additional, .selected-weather__air {
-    font-size: 1.2rem; }
+    font-size: 1.5rem;
+    font-weight: 600; }
   .selected-weather__additional {
-    width: 20rem;
+    width: 25rem;
     display: flex;
     justify-content: space-around;
     align-items: center; }
+
+.chance-of-rain__info {
+  font-size: 1.3rem;
+  font-weight: 600; }
 
 .select-place {
   display: none; }
@@ -226,8 +232,6 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.5); }
-    .weather-information__period a {
-      cursor: pointer; }
     .weather-information__period .active {
       color: black; }
   .weather-information__details-container {

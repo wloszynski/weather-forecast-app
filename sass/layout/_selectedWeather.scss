@@ -26,18 +26,23 @@
   }
 
   &__location {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   &__additional,
   &__air {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
 
   &__additional {
-    width: 20rem;
+    width: 25rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
+}
+.chance-of-rain__info {
+  font-size: 1.3rem;
+  font-weight: 600;
 }
