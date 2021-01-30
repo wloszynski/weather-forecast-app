@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <meta name="Description" content="Weather Web App">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -28,17 +30,17 @@
   </head>
   <body>
     <div id="root">
-      <aside class="aside">
+      <divside class="aside">
         <nav class="nav">
           <!-- <div class="nav__search"><i class="fas fa-search"></i> Search</div> -->
           <div class="nav__item nav__photo" id="logo">
-            <img src="./img/f-secure.svg" alt="f-secure" />
+            <img loading="lazy" src="./img/f-secure.svg" alt="f-secure" />
           </div>
         </nav>
         <div class="selected-weather">
           <div class="selected-weather__date">
             <div class="selected-weather__date-img">
-              <img id="widgetPhoto" src="./img/1.svg" alt="" />
+              <img loading="lazy" id="widgetPhoto" src="./img/1.svg" alt="" />
             </div>
             <div class="selected-weather__date-text">
               <h3 class="selected-weather__date-name">Today</h3>
@@ -59,7 +61,7 @@
           <span class="selected-weather__air"> Air Quality Index: <span class="selected-weather__air-quality">Good</span></span>
           <span class="chance-of-rain__info">Humidity level: <span class="chance-of-rain__info-percentage">59</span>%</span>
         </div>
-      </aside>
+      </divside>
 
       <div class="select-place" >
         <!-- <div class="select-place__search"><input type="text" placeholder="Search new place...">
@@ -70,7 +72,7 @@
         <div class="select-place__cities">
             <div class="select-place__city ">
               <div class="select-place__city-image">
-                <img class="active" src="./img/poznan.jpg" alt="">
+                <img loading="lazy" class="active" src="./img/poznan.jpg" alt="">
 
               <div class="select-place__city-name">
                 <span>
@@ -80,7 +82,7 @@
           </div>
                  <div class="select-place__city">
               <div class="select-place__city-image">
-                <img src="./img/warsaw.jpg" alt="warsaw">
+                <img loading="lazy" src="./img/warsaw.jpg" alt="warsaw">
 
               <div class="select-place__city-name">
                 <span>
@@ -90,7 +92,7 @@
           </div>
                  <div class="select-place__city">
               <div class="select-place__city-image">
-                <img src="./img/helsinki.jpg" alt="helsinki">
+                <img loading="lazy" src="./img/helsinki.jpg" alt="helsinki">
 
               <div class="select-place__city-name">
                 <span>
@@ -100,7 +102,7 @@
           </div>
                  <div class="select-place__city">
             <div class="select-place__city-image">
-                <img src="./img/munchen.jpg" alt="munchen">
+                <img loading="lazy" src="./img/munchen.jpg" alt="munchen">
 
               <div class="select-place__city-name">
                 <span>
@@ -110,7 +112,7 @@
             </div>
           </div>       <div class="select-place__city">
               <div class="select-place__city-image">
-                <img src="./img/newyork.jpg" alt="newyork">
+                <img loading="lazy" src="./img/newyork.jpg" alt="newyork">
 
               <div class="select-place__city-name">
                 <span>
@@ -123,18 +125,18 @@
 
       <div class="weather-information">
         <div class="weather-information__period">
-          <a class="weather-information__period-item active">
+          <div class="weather-information__period-item active">
             <span>Week</span>
-          </a>
-          <!-- <a class="weather-information__period-item">
+          </div>
+          <!-- <div class="weather-information__period-item">
             <span>Month</span>
-          </a>
-          <a class="weather-information__period-item">
+          </div>
+          <div class="weather-information__period-item">
             <span>3 months</span>
-          </a>
-          <a class="weather-information__period-item">
+          </div>
+          <div class="weather-information__period-item">
             <span>6 months</span>
-          </a> -->
+          </div> -->
         </div>
         <div class="weather-information__details-container">
         </div>
