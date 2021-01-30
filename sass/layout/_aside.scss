@@ -6,9 +6,11 @@
   grid-template-columns: repeat(4, 1fr);
 
   background-image: url("../img/sky.svg");
-  // background-image: url("../img/windows_wallpaper.jpg");
+
   background-size: cover;
   background-position: 50% 50%;
+
+  transition: background-image 0.5s;
 
   @include respond(tab-land) {
     grid-column: 7 / 10;
