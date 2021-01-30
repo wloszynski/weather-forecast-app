@@ -76,6 +76,8 @@ body {
       width: 100%; }
   .selected-weather__date-name {
     font-size: 2rem; }
+  .selected-weather__date-content {
+    font-size: 1.2rem; }
 
 .aside {
   grid-column: 1 / end;
