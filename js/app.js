@@ -353,9 +353,9 @@ const aside = document.querySelector(".aside");
 // EVENT LISTENERS
 document.querySelector("#logo").addEventListener("click", () => {
   // background-image: url("../img/windows_wallpaper.jpg");
-  if (aside.style.backgroundImage === 'url("../img/windows_wallpaper.jpg")') {
+  if (aside.style.backgroundImage === 'url("../img/landscape-light.svg")') {
     aside.style.backgroundImage = 'url("../img/sky.svg")';
   } else {
-    aside.style.backgroundImage = 'url("../img/windows_wallpaper.jpg")';
+    aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
   }
 });
