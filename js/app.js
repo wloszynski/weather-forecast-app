@@ -395,10 +395,10 @@ class App {
             </div>
             <span class="weather-information__details__temp">+20°C</span>
             <div class="weather-information__details__humidity">
-              <span>${data.humidity}%</span>
+              <span><i class="fas fa-tint"></i> ${data.humidity}%</span>
             </div>
             <div class="weather-information__details__wind">
-              <span>${data.wind_speed}</span>
+              <span><i class="fas fa-wind"></i> ${data.wind_speed} m/s</span>
             </div>
           </div>`;
 
