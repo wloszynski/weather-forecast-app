@@ -27,6 +27,12 @@
     }
   }
   #logo {
+    transition: all 0.3s;
     cursor: pointer;
+
+    animation: goOut 1s 1s 3;
+  }
+  #logo:hover {
+    transform: scale(1.2);
   }
 }
