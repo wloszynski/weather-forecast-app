@@ -8,6 +8,7 @@ const searchInputs = document.querySelectorAll(".search");
 
 // VARIABLES FOR WIDGET
 const aside = document.querySelector(".aside");
+const widget = document.querySelector(".selected-weather");
 const widgetTemp = document.querySelector(".selected-weather__temp");
 const widgetLocation = document.querySelector(".selected-weather__location");
 const widgetFeelsLike = document.querySelector(
@@ -149,6 +150,9 @@ class App {
 
   // Loading data -> weather, location, forecast,
   async loadData(lat, lng) {
+    forecastContainer.innerHTML = '<div class="loader">Loading...</div>';
+    widget.style.opacity = "0";
+
     let airQuality = await this.getAirQualityData(lat, lng).then(
       (quality) => quality
     );
@@ -353,6 +357,7 @@ class App {
                 `;
       weatherForecasts.push(forecast);
     }
+    widget.style.opacity = "1";
 
     forecastContainer.innerHTML = weatherForecasts.join(" ");
   }

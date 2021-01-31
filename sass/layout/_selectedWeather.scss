@@ -12,6 +12,8 @@
 
   text-align: center;
 
+  transition: opacity 0.5s;
+
   &__temp {
     line-height: 10rem;
     font-size: 10rem;
