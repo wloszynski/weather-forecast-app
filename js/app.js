@@ -363,38 +363,28 @@ class App {
     let weatherForecasts = new Array();
 
     // Deleting 8th array
-    weatherData = weatherData.daily.splice(0, 7);
+    weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
+      console.log(data);
       const forecast = `
-                <div class="weather-information__details">
-                  <div class="weather-information-date">${this.getDayOfTheWeek(
-                    data.dt
-                  )}</div>
-                  <div class="weather-information-rain">
 
-                    <span class="weather-information-rain__chance">${
-                      data.humidity
-                    }% </span>&nbsp;
-                     <img src="../img/001-drop.svg" alt="drop">
-                  </div>
-                  <div class="weather-information-sky">
-                    <img src="./img/${this.checkIfCloudy(
-                      data.clouds
-                    )}.svg" alt="weather">
-                  </div>
-                  <div class="weather-information-min">${data.temp.min.toFixed(
-                    1
-                  )}<sup>℃</sup>
-                    <img src="../img/minTemp.svg" alt="drop">
-                  </div>
-                  <div class="weather-information-max">${data.temp.max.toFixed(
-                    1
-                  )}<sup>℃</sup>
-                    <img src="../img/maxTemp.svg" alt="drop">
-                  </div>
-                </div>
-                `;
+      <div class="weather-information__details">
+            <span class="weather-information__details__title">${this.getDayOfTheWeek(
+              data.dt
+            )}</span>
+            <div class="weather-information__details__image">
+              <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
+            </div>
+            <span class="weather-information__details__temp">+20C</span>
+            <div class="weather-information__details__humidity">
+              <span>${data.humidity}%</span>
+            </div>
+            <div class="weather-information__details__wind">
+              <span>${data.wind_speed}</span>
+            </div>
+          </div>`;
+
       weatherForecasts.push(forecast);
     }
     widget.style.opacity = "1";

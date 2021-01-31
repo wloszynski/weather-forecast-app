@@ -5,13 +5,14 @@
     grid-column: 1/7;
     grid-row: 1/2;
 
+    color: white;
+
     height: 26rem;
     width: 70rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 
-    background-color: $color-blue-light;
     padding: 2rem 2rem 1rem 2rem;
 
     &__search {

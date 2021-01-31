@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta name="Description" content="Weather Web App">
+    <meta name="Description" content="Weather Web App" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -30,11 +30,18 @@
   </head>
   <body>
     <div id="root">
+      <div class="gradientBg"></div>
+
       <aside class="aside">
         <nav class="nav">
           <div id="searchMobDiv" class="search nav__search">
             <i id="mobileSearch" class="fas fa-search search__icon"></i>
-          <input class="search__input" id="searchCityMob" type="text" placeholder="Search city...">
+            <input
+              class="search__input"
+              id="searchCityMob"
+              type="text"
+              placeholder="Search city..."
+            />
           </div>
           <div class="nav__item nav__photo" id="logo">
             <img loading="lazy" src="./img/f-secure.svg" alt="f-secure" />
@@ -56,77 +63,84 @@
           <span class="selected-weather__location">Poznan, Poland</span>
           <span class="selected-weather__additional">
             <span class="selected-weather__additional-feel"
-              >Feels like <span class="selected-weather__additional-feel-temp">28</span>
+              >Feels like
+              <span class="selected-weather__additional-feel-temp">28</span>
             </span>
             <i class="far fa-dot-circle"></i>
-            <span class="additional-sunset"> Sunset <span class="additional-sunset-time">20:15</span></span>
+            <span class="additional-sunset">
+              Sunset <span class="additional-sunset-time">20:15</span></span
+            >
           </span>
-          <span class="selected-weather__air"> Air Quality Index: <span class="selected-weather__air-quality">Good</span></span>
-          <span class="chance-of-rain__info">Humidity level: <span class="chance-of-rain__info-percentage">59</span>%</span>
+          <span class="selected-weather__air">
+            Air Quality Index:
+            <span class="selected-weather__air-quality">Good</span></span
+          >
+          <span class="chance-of-rain__info"
+            >Humidity level:
+            <span class="chance-of-rain__info-percentage">59</span>%</span
+          >
         </div>
       </aside>
 
-      <div class="select-place" >
-
+      <div class="select-place">
         <div class="select-place__title">
-        <h2>F-Secure <span>Forecast</span></h2>
-        <div class="select-place__search search">
+          <h2>F-Secure <span>Forecast</span></h2>
+          <div class="select-place__search search">
             <i id="desktopSearch" class="fas fa-search search__icon"></i>
 
-          <input class="search__input" id="searchCity" type="text" placeholder="Search city...">
-        <!-- <i class="fas fa-map-marked-alt"></i> -->
-      </div>
+            <input
+              class="search__input"
+              id="searchCity"
+              type="text"
+              placeholder="Search city..."
+            />
+            <!-- <i class="fas fa-map-marked-alt"></i> -->
+          </div>
         </div>
         <div class="select-place__cities">
-            <div class="select-place__city ">
-              <div class="select-place__city-image">
-                <img loading="lazy" src="./img/poznan.jpg" alt="">
-               <div class="select-place__city-name">
-                <span>
-                  Poznan, Poland
-                </span>
-              </div></div>
-          </div>
-                 <div class="select-place__city">
-              <div class="select-place__city-image">
-                <img loading="lazy" src="./img/warsaw.jpg" alt="warsaw">
-
-              <div class="select-place__city-name">
-                <span>
-                  Warsaw, Poland
-                </span>
-              </div></div>
-          </div>
-                 <div class="select-place__city">
-              <div class="select-place__city-image">
-                <img loading="lazy" src="./img/helsinki.jpg" alt="helsinki">
-
-              <div class="select-place__city-name">
-                <span>
-                  Helsinki, Finland
-                </span>
-              </div></div>
-          </div>
-                 <div class="select-place__city">
+          <div class="select-place__city">
             <div class="select-place__city-image">
-                <img loading="lazy" src="./img/munchen.jpg" alt="munchen">
-
+              <img loading="lazy" src="./img/poznan.jpg" alt="" />
               <div class="select-place__city-name">
-                <span>
-                  München, Germany
-                </span>
+                <span> Poznan, Poland </span>
               </div>
             </div>
           </div>
-           <div class="select-place__city">
-              <div class="select-place__city-image">
-                <img loading="lazy" src="./img/newyork.jpg" alt="newyork">
+          <div class="select-place__city">
+            <div class="select-place__city-image">
+              <img loading="lazy" src="./img/warsaw.jpg" alt="warsaw" />
 
               <div class="select-place__city-name">
-                <span>
-                  New York, USA
-                </span>
-              </div></div>
+                <span> Warsaw, Poland </span>
+              </div>
+            </div>
+          </div>
+          <div class="select-place__city">
+            <div class="select-place__city-image">
+              <img loading="lazy" src="./img/helsinki.jpg" alt="helsinki" />
+
+              <div class="select-place__city-name">
+                <span> Helsinki, Finland </span>
+              </div>
+            </div>
+          </div>
+          <div class="select-place__city">
+            <div class="select-place__city-image">
+              <img loading="lazy" src="./img/munchen.jpg" alt="munchen" />
+
+              <div class="select-place__city-name">
+                <span> München, Germany </span>
+              </div>
+            </div>
+          </div>
+          <div class="select-place__city">
+            <div class="select-place__city-image">
+              <img loading="lazy" src="./img/newyork.jpg" alt="newyork" />
+
+              <div class="select-place__city-name">
+                <span> New York, USA </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -134,28 +148,11 @@
       <div class="weather-information">
         <div class="weather-information__period">
           <div class="weather-information__period-item active">
-            <span>Week</span>
+            <span>Next 5 days</span>
           </div>
-
-          <!-- <div class="weather-information__period-item">
-            <span>Month</span>
-          </div>
-          <div class="weather-information__period-item">
-            <span>3 months</span>
-          </div>
-          <div class="weather-information__period-item">
-            <span>6 months</span>
-          </div> -->
         </div>
-        <div class="weather-information__description">
-          <div class=""><span>Day</span></div>
-          <div class=""><span>Humidity</span></div>
-          <div class=""><span>Cloudiness</span></div>
-          <div class=""><span>Min temp</span></div>
-          <div class=""><span>Max temp</span></div>
-        </div>
-        <div class="weather-information__details-container">
-        </div>
+        <div class="weather-information__details-container"></div>
       </div>
+    </div>
   </body>
 </html>

@@ -37,6 +37,11 @@
   }
 
   & #desktopSearch {
+    transition: all 0.3s;
     font-size: 2rem;
+
+    &:hover {
+      font-size: 2.4rem;
+    }
   }
 }
