@@ -1,6 +1,6 @@
 "use strict";
 
-import { API_KEY } from "./config.js";
+import { OWM_API_KEY, GC_API_KEY } from "./config.js";
 
 class Weather {
   constructor(location, temp, clouds, chanceOfRain, date) {
@@ -40,6 +40,9 @@ class WeatherForecast extends Weather {
   }
 }
 
+// VARIABLES FOR SEARCH
+const searchCity = document.querySelector("#searchCity");
+
 // VARIABLES FOR WIDGET
 const widgetTemp = document.querySelector(".selected-weather__temp");
 const widgetLocation = document.querySelector(".selected-weather__location");
@@ -68,62 +71,68 @@ class App {
   weatherWidget;
 
   constructor() {
-    // VARIABLES FOR CITIES LOCATIONS
-    const locations = new Array([
-      [52.409538, 16.931992],
-      [52.229676, 21.012229],
-      [60.192059, 24.945831],
-      [48.137154, 11.576124],
-      [40.73061, -73.935242],
-    ]);
-    let start = 0;
-
     this.getPosition();
 
     // Adding Event Listeners
     document
       .querySelectorAll(".select-place__city")[0]
       .addEventListener("click", () => {
-        this.loadData2(52.409538, 16.931992);
+        this.loadData(52.409538, 16.931992);
       });
 
     document
       .querySelectorAll(".select-place__city")[1]
       .addEventListener("click", () => {
-        this.loadData2(52.229676, 21.012229);
+        this.loadData(52.229676, 21.012229);
       });
 
     document
       .querySelectorAll(".select-place__city")[2]
       .addEventListener("click", () => {
-        this.loadData2(60.16952, 24.93545);
+        this.loadData(60.16952, 24.93545);
       });
 
     document
       .querySelectorAll(".select-place__city")[3]
       .addEventListener("click", () => {
-        this.loadData2(48.137154, 11.576124);
+        this.loadData(48.137154, 11.576124);
       });
 
     document
       .querySelectorAll(".select-place__city")[4]
       .addEventListener("click", () => {
-        this.loadData2(40.7127837, -74.0059413);
+        this.loadData(40.7127837, -74.0059413);
+      });
+
+    document.querySelector("#searchCity").addEventListener("keypress", (e) => {
+      this.searchQuery(e);
+    });
+
+    document
+      .querySelector("#searchCityMob")
+      .addEventListener("keypress", (e) => {
+        this.searchQuery(e);
       });
   }
 
   // Getting user position -> lat and lng
   getPosition() {
     if (navigator.geolocation)
-      navigator.geolocation.getCurrentPosition(this.loadData.bind(this), () => {
-        this.loadData2(52.409538, 16.931992);
-      });
+      navigator.geolocation.getCurrentPosition(
+        this.convertGeolocationItemToCoords.bind(this),
+        () => {
+          this.loadData(52.409538, 16.931992);
+        }
+      );
   }
-  // Loading data -> weather, location, forecast,
-  async loadData(position) {
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
 
+  // Success fall back for getPosition()
+  convertGeolocationItemToCoords(position) {
+    this.loadData(position.coords.latitude, position.coords.longitude);
+  }
+
+  // Loading data -> weather, location, forecast,
+  async loadData(lat, lng) {
     let airQuality = await this.getAirQualityData(lat, lng).then(
       (quality) => quality
     );
@@ -132,42 +141,49 @@ class App {
 
     const weatherData = await this.getWeatherData(lat, lng);
 
-    await this.displayWidget(
+    this.displayWidget(
       this.getWeatherWidgetObject(weatherData, location, airQuality)
     );
 
-    await this.displayForecasts(weatherData);
-  }
-  // Loading data -> weather, location, forecast,
-  async loadData2(lat, lng) {
-    let airQuality = await this.getAirQualityData(lat, lng).then(
-      (quality) => quality
-    );
-
-    let location = await this.getLocation(lat, lng).then((loc) => loc);
-
-    const weatherData = await this.getWeatherData(lat, lng);
-
-    await this.displayWidget(
-      this.getWeatherWidgetObject(weatherData, location, airQuality)
-    );
-
-    await this.displayForecasts(weatherData);
+    this.displayForecasts(weatherData);
   }
 
   // Getting location using lat and lng -> Wroclaw, PL
   async getLocation(lat, lng) {
+    return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+      .then((response) => response.json())
+      .then((data) => data.city)
+      .catch((err) => console.error(err));
+  }
+
+  // Getting location using from city name
+  async getLocationFromName(cityName) {
     return await fetch(
-      `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY}`
+      `https://geocode.xyz/${cityName}?json=1$auth=${GC_API_KEY}`
     )
       .then((response) => response.json())
-      .then((data) => data[0].name)
-      .catch((err) => console.error(err));
+      .then((data) => {
+        if (!data.latt) {
+          if (data.error.code === "018") {
+            alert("Could not find provided city, try again.");
+            throw new Error("Could not find provided city");
+          }
+          if (data.error.code === "006") {
+            alert("Request Throttled. Over Rate limit: up to 2 per sec.");
+            throw new Error(
+              "Request Throttled. Over Rate limit: up to 2 per sec."
+            );
+          }
+        }
+        console.log(data);
+        this.loadData(data.latt, data.longt);
+      })
+      .catch((err) => {});
   }
 
   async getWeatherData(lat, lng) {
     return await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&appid=${OWM_API_KEY}&units=metric`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -180,7 +196,7 @@ class App {
   // Returns Good / Fair / Moderate / Poor / Very Poor
   async getAirQualityData(lat, lng) {
     return await fetch(
-      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lng}&appid=${OWM_API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => data.list[0].main.aqi)
@@ -342,6 +358,14 @@ class App {
     }
 
     return 0;
+  }
+
+  async searchQuery(e) {
+    if (e.keyCode === 13) {
+      await this.getLocationFromName(e.target.value);
+      e.target.value = "";
+      e.target.blur();
+    }
   }
 }
 

@@ -30,9 +30,12 @@
   </head>
   <body>
     <div id="root">
-      <divside class="aside">
+      <aside class="aside">
         <nav class="nav">
-          <!-- <div class="nav__search"><i class="fas fa-search"></i> Search</div> -->
+          <div id="searchMobDiv" class=" nav__search">
+            <!-- <i class="fas fa-search"></i> Search -->
+            <input class="search" id="searchCityMob" type="text" placeholder="Search city...">
+          </div>
           <div class="nav__item nav__photo" id="logo">
             <img loading="lazy" src="./img/f-secure.svg" alt="f-secure" />
           </div>
@@ -61,11 +64,11 @@
           <span class="selected-weather__air"> Air Quality Index: <span class="selected-weather__air-quality">Good</span></span>
           <span class="chance-of-rain__info">Humidity level: <span class="chance-of-rain__info-percentage">59</span>%</span>
         </div>
-      </divside>
+      </aside>
 
       <div class="select-place" >
-        <!-- <div class="select-place__search"><input type="text" placeholder="Search new place...">
-        <i class="fas fa-map-marked-alt"></i></div> -->
+        <div class="select-place__search"><input id="searchCity" type="text" placeholder="Search city...">
+        <i class="fas fa-map-marked-alt"></i></div>
         <div class="select-place__title">
         <h2>F-Secure <span>Forecast</span></h2>
         </div>
@@ -128,6 +131,7 @@
           <div class="weather-information__period-item active">
             <span>Week</span>
           </div>
+
           <!-- <div class="weather-information__period-item">
             <span>Month</span>
           </div>

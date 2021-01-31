@@ -21,6 +21,10 @@
     &__search {
       display: none;
     }
+
+    & #searchMobDiv {
+      display: none;
+    }
   }
   #logo {
     cursor: pointer;
