@@ -2,6 +2,67 @@
 
 import { OWM_API_KEY, GC_API_KEY } from "./config.js";
 
+// VARIABLES FOR SEARCH
+const widgetSearch = document.querySelector(".search__input");
+const searchInputs = document.querySelectorAll(".search");
+
+// VARIABLES FOR WIDGET
+const aside = document.querySelector(".aside");
+const widgetTemp = document.querySelector(".selected-weather__temp");
+const widgetLocation = document.querySelector(".selected-weather__location");
+const widgetFeelsLike = document.querySelector(
+  ".selected-weather__additional-feel-temp"
+);
+const widgetSunset = document.querySelector(".additional-sunset-time");
+const widgetAirQuality = document.querySelector(
+  ".selected-weather__air-quality"
+);
+const widgetChanceOfRain = document.querySelector(
+  ".chance-of-rain__info-percentage"
+);
+const widgetDate = document.querySelector(".selected-weather__date-content");
+const widgetPhoto = document.querySelector("#widgetPhoto");
+
+// VARIABLES FOR WEATHER FORECAST
+const forecastContainer = document.querySelector(
+  ".weather-information__details-container"
+);
+
+// VARIABLES FOR IMAGES
+const citiesDiv = document.querySelectorAll(".select-place__city");
+
+// EVENT LISTENERS
+
+// Logo as theme switch
+document.querySelector("#logo").addEventListener("click", () => {
+  // background-image: url("../img/windows_wallpaper.jpg");
+  if (aside.style.backgroundImage === 'url("../img/landscape-light.svg")') {
+    aside.style.backgroundImage = 'url("../img/sky.svg")';
+    aside.style.color = "white";
+  } else {
+    aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
+    aside.style.color = "#0008";
+  }
+});
+
+// Showing input when search icon clicked
+document.querySelector(".search__icon").addEventListener("click", () => {
+  widgetSearch.classList.toggle("search__input--open");
+
+  document.querySelector(".search__input").focus();
+});
+
+// Hiding input if clicked outside of search
+document.addEventListener(
+  "click",
+  (event) => {
+    if (!event.target.classList.contains("search__input--open")) {
+      widgetSearch.classList.remove("search__input--open");
+    }
+  },
+  true
+);
+
 class Weather {
   constructor(location, temp, clouds, chanceOfRain, date) {
     this.location = location;
@@ -40,79 +101,34 @@ class WeatherForecast extends Weather {
   }
 }
 
-// VARIABLES FOR SEARCH
-const widgetSearch = document.querySelector(".search__input");
-
-// VARIABLES FOR WIDGET
-const widgetTemp = document.querySelector(".selected-weather__temp");
-const widgetLocation = document.querySelector(".selected-weather__location");
-const widgetFeelsLike = document.querySelector(
-  ".selected-weather__additional-feel-temp"
-);
-const widgetSunset = document.querySelector(".additional-sunset-time");
-const widgetAirQuality = document.querySelector(
-  ".selected-weather__air-quality"
-);
-const widgetChanceOfRain = document.querySelector(
-  ".chance-of-rain__info-percentage"
-);
-const widgetDate = document.querySelector(".selected-weather__date-content");
-const widgetPhoto = document.querySelector("#widgetPhoto");
-
-// VARIABLES FOR WEATHER FORECAST
-const forecastContainer = document.querySelector(
-  ".weather-information__details-container"
-);
-
-// VARIABLES FOR IMAGES
-const citiesDiv = document.querySelectorAll(".select-place__city");
-
 class App {
   weatherWidget;
 
   constructor() {
+    // VARIABLES FOR CITIES LOCATIONS
+    const locations = new Array(
+      [52.409538, 16.931992],
+      [52.229676, 21.012229],
+      [60.192059, 24.945831],
+      [48.137154, 11.576124],
+      [40.73061, -73.935242]
+    );
+
+    // EVENT LISTENERS
+    Array.from(citiesDiv).forEach((element, i) =>
+      element.addEventListener("click", () => {
+        this.loadData(locations[i][0], locations[i][1]);
+      })
+    );
+
+    Array.from(searchInputs).forEach((element, i) =>
+      element.addEventListener("keypress", (e) => {
+        this.checkPressedKey(e);
+      })
+    );
+
+    // Get user position and print data
     this.getPosition();
-
-    // Adding Event Listeners
-    document
-      .querySelectorAll(".select-place__city")[0]
-      .addEventListener("click", () => {
-        this.loadData(52.409538, 16.931992);
-      });
-
-    document
-      .querySelectorAll(".select-place__city")[1]
-      .addEventListener("click", () => {
-        this.loadData(52.229676, 21.012229);
-      });
-
-    document
-      .querySelectorAll(".select-place__city")[2]
-      .addEventListener("click", () => {
-        this.loadData(60.16952, 24.93545);
-      });
-
-    document
-      .querySelectorAll(".select-place__city")[3]
-      .addEventListener("click", () => {
-        this.loadData(48.137154, 11.576124);
-      });
-
-    document
-      .querySelectorAll(".select-place__city")[4]
-      .addEventListener("click", () => {
-        this.loadData(40.7127837, -74.0059413);
-      });
-
-    document.querySelector("#searchCity").addEventListener("keypress", (e) => {
-      this.searchQuery(e);
-    });
-
-    document
-      .querySelector("#searchCityMob")
-      .addEventListener("keypress", (e) => {
-        this.searchQuery(e);
-      });
   }
 
   // Getting user position -> lat and lng
@@ -137,7 +153,7 @@ class App {
       (quality) => quality
     );
 
-    let location = await this.getLocation(lat, lng).then((loc) => loc);
+    let location = await this.getCityName(lat, lng).then((loc) => loc);
 
     const weatherData = await this.getWeatherData(lat, lng);
 
@@ -149,7 +165,7 @@ class App {
   }
 
   // Getting location using lat and lng -> Wroclaw, PL
-  async getLocation(lat, lng) {
+  async getCityName(lat, lng) {
     return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
       .then((response) => response.json())
       .then((data) => data.city)
@@ -166,7 +182,7 @@ class App {
             alert("Could not find provided city, try again.");
             throw new Error("Could not find provided city");
           }
-          if (data.error.code === "006") {
+          if (data.error.code === ("006" || "008")) {
             alert("Request Throttled. Over Rate limit: up to 2 per sec.");
             throw new Error(
               "Request Throttled. Over Rate limit: up to 2 per sec."
@@ -295,7 +311,7 @@ class App {
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
 
-    widgetPhoto.src = `../img/${this.checkIfCloudy(weatherWidget.cloud)}.svg`;
+    widgetPhoto.src = `../img/${this.checkIfCloudy(weatherWidget.clouds)}.svg`;
   }
 
   // Displaying weather forecast
@@ -315,7 +331,7 @@ class App {
 
                     <span class="weather-information-rain__chance">${
                       data.humidity
-                    }% </span>
+                    }% </span>&nbsp;
                      <img src="../img/001-drop.svg" alt="drop">
                   </div>
                   <div class="weather-information-sky">
@@ -358,7 +374,8 @@ class App {
     return 0;
   }
 
-  async searchQuery(e) {
+  //
+  async checkPressedKey(e) {
     if (e.keyCode === 13) {
       await this.getLocationFromName(e.target.value);
       e.target.value = "";
@@ -372,24 +389,3 @@ class App {
 }
 
 new App();
-
-// VARIABLES
-const aside = document.querySelector(".aside");
-
-// EVENT LISTENERS
-document.querySelector("#logo").addEventListener("click", () => {
-  // background-image: url("../img/windows_wallpaper.jpg");
-  if (aside.style.backgroundImage === 'url("../img/landscape-light.svg")') {
-    aside.style.backgroundImage = 'url("../img/sky.svg")';
-    aside.style.color = "white";
-  } else {
-    aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
-    aside.style.color = "#0008";
-  }
-});
-
-document.querySelector(".search__icon").addEventListener("click", () => {
-  widgetSearch.classList.toggle("search__input--open");
-
-  document.querySelector(".search__input").focus();
-});

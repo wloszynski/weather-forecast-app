@@ -4,8 +4,8 @@
   align-items: center;
   align-content: center;
   font-family: inherit;
-  padding: 0.6rem;
 
+  padding: 0.6rem;
   border-radius: 10px;
   border: none;
 
@@ -13,21 +13,26 @@
 
   &__icon {
     font-size: 2rem;
+    cursor: pointer;
   }
 
   &__input {
     font-family: inherit;
-    border-radius: 10px;
     border: none;
+    outline: black;
+
+    border-radius: 10px;
     width: 0;
-    transition: width 0.5s;
+    padding: 0.5rem 0;
+
+    transition: all 0.5s;
 
     &--open {
       margin-left: 0.5rem;
-      transition: all 0.5s;
-
-      padding: 0.5rem;
+      padding: 0.5rem 0 0.5rem 1rem;
       width: 20rem;
+
+      transition: all 0.5s;
     }
   }
 }

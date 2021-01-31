@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="shortcut icon" type="image/png" href="img/f-secure_logo.svg" />
 
-    <script src="./js/app.js" type="module"></script>
+    <script src="./js/app.js" type="module" defer></script>
 
     <title>F-Secure Forecast</title>
   </head>
@@ -67,8 +67,10 @@
       </aside>
 
       <div class="select-place" >
-        <div class="select-place__search search"><input class="seach__input" id="searchCity" type="text" placeholder="Search city...">
-        <i class="fas fa-map-marked-alt"></i></div>
+        <div class="select-place__search search">
+          <input class="seach__input" id="searchCity" type="text" placeholder="Search city...">
+        <!-- <i class="fas fa-map-marked-alt"></i> -->
+      </div>
         <div class="select-place__title">
         <h2>F-Secure <span>Forecast</span></h2>
         </div>

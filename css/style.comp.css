@@ -1,3 +1,9 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
 *,
 *::before,
 *::after {
@@ -79,12 +85,39 @@ body {
   .selected-weather__date-content {
     font-size: 1.2rem; }
 
+.search {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  font-family: inherit;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: none;
+  transition: all 0.5s; }
+  .search__icon {
+    font-size: 2rem;
+    cursor: pointer; }
+  .search__input {
+    font-family: inherit;
+    border: none;
+    outline: black;
+    border-radius: 10px;
+    width: 0;
+    padding: 0.5rem 0;
+    transition: all 0.5s; }
+    .search__input--open {
+      margin-left: 0.5rem;
+      padding: 0.5rem 0 0.5rem 1rem;
+      width: 20rem;
+      transition: all 0.5s; }
+
 .aside {
   grid-column: 1 / end;
   height: 100vh;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background-image: url("../img/sky.svg");
+  background-image: url("../img/sky.svg"), url("../img/landscape-light.svg");
   background-size: cover;
   background-position: 50% 50%;
   transition: background-image 0.5s; }
@@ -127,6 +160,8 @@ body {
       height: 5rem;
       padding: 5rem 0 0 0; }
       .nav__search {
+        display: none; }
+      .nav #searchMobDiv {
         display: none; } }
   .nav #logo {
     cursor: pointer; }
