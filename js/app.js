@@ -41,7 +41,7 @@ class WeatherForecast extends Weather {
 }
 
 // VARIABLES FOR SEARCH
-const searchCity = document.querySelector("#searchCity");
+const widgetSearch = document.querySelector(".search__input");
 
 // VARIABLES FOR WIDGET
 const widgetTemp = document.querySelector(".selected-weather__temp");
@@ -158,9 +158,7 @@ class App {
 
   // Getting location using from city name
   async getLocationFromName(cityName) {
-    return await fetch(
-      `https://geocode.xyz/${cityName}?json=1$auth=${GC_API_KEY}`
-    )
+    return await fetch(`https://geocode.xyz/${cityName}?json=1`)
       .then((response) => response.json())
       .then((data) => {
         if (!data.latt) {
@@ -365,6 +363,10 @@ class App {
       await this.getLocationFromName(e.target.value);
       e.target.value = "";
       e.target.blur();
+
+      document
+        .querySelector(".search__input")
+        .classList.remove("search__input--open");
     }
   }
 }
@@ -384,4 +386,10 @@ document.querySelector("#logo").addEventListener("click", () => {
     aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
     aside.style.color = "#0008";
   }
+});
+
+document.querySelector(".search__icon").addEventListener("click", () => {
+  widgetSearch.classList.toggle("search__input--open");
+
+  document.querySelector(".search__input").focus();
 });

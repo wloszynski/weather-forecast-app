@@ -80,10 +80,28 @@ body {
     font-size: 1.2rem; }
 
 .search {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
   font-family: inherit;
   padding: 0.6rem;
   border-radius: 10px;
-  border: none; }
+  border: none;
+  transition: all 0.5s; }
+  .search__icon {
+    font-size: 2rem; }
+  .search__input {
+    font-family: inherit;
+    border-radius: 10px;
+    border: none;
+    width: 0;
+    transition: width 0.5s; }
+    .search__input--open {
+      margin-left: 0.5rem;
+      transition: all 0.5s;
+      padding: 0.5rem;
+      width: 20rem; }
 
 .aside {
   grid-column: 1 / end;

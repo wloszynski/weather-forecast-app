@@ -32,9 +32,9 @@
     <div id="root">
       <aside class="aside">
         <nav class="nav">
-          <div id="searchMobDiv" class=" nav__search">
-            <!-- <i class="fas fa-search"></i> Search -->
-            <input class="search" id="searchCityMob" type="text" placeholder="Search city...">
+          <div id="searchMobDiv" class="search nav__search">
+            <i class="fas fa-search search__icon"></i>
+          <input class="search__input" id="searchCityMob" type="text" placeholder="Search city...">
           </div>
           <div class="nav__item nav__photo" id="logo">
             <img loading="lazy" src="./img/f-secure.svg" alt="f-secure" />
@@ -67,7 +67,7 @@
       </aside>
 
       <div class="select-place" >
-        <div class="select-place__search"><input id="searchCity" type="text" placeholder="Search city...">
+        <div class="select-place__search search"><input class="seach__input" id="searchCity" type="text" placeholder="Search city...">
         <i class="fas fa-map-marked-alt"></i></div>
         <div class="select-place__title">
         <h2>F-Secure <span>Forecast</span></h2>
