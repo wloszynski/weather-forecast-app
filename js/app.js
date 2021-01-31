@@ -208,7 +208,7 @@ class App {
 
   // Loading data -> weather, location, forecast,
   async loadData(lat, lng) {
-    forecastContainer.innerHTML = '<div class="loader">Loading...</div>';
+    forecastContainer.innerHTML = '<div class="loader"></div>';
     widget.style.opacity = "0";
 
     let airQuality = await this.getAirQualityData(lat, lng).then(
