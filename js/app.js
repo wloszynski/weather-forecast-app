@@ -30,6 +30,7 @@ const forecastContainer = document.querySelector(
 );
 
 // VARIABLES FOR IMAGES
+const cityContainer = document.querySelector(".select-place__cities");
 const citiesDiv = document.querySelectorAll(".select-place__city");
 
 // EVENT LISTENERS
@@ -47,11 +48,24 @@ document.querySelector("#logo").addEventListener("click", () => {
 });
 
 // Showing input when search icon clicked
-document.querySelector(".search__icon").addEventListener("click", () => {
-  widgetSearch.classList.toggle("search__input--open");
+Array.from(document.querySelectorAll(".search__icon")).forEach((element) =>
+  element.addEventListener("click", (e) => {
+    console.log(e.target);
+    if (e.target.id === "desktopSearch") {
+      document
+        .querySelector("#searchCity")
+        .classList.toggle("search__input--open");
 
-  document.querySelector(".search__input").focus();
-});
+      document.querySelector("#searchCity").focus();
+    } else {
+      document
+        .querySelector("#searchCityMob")
+        .classList.toggle("search__input--open");
+
+      document.querySelector("#searchCityMob").focus();
+    }
+  })
+);
 
 // Hiding input if clicked outside of search
 document.addEventListener(
@@ -60,9 +74,35 @@ document.addEventListener(
     if (!event.target.classList.contains("search__input--open")) {
       widgetSearch.classList.remove("search__input--open");
     }
+    if (!event.target.classList.contains("search__input--open")) {
+      document
+        .querySelector("#searchCity")
+        .classList.remove("search__input--open");
+    }
   },
   true
 );
+
+// Remove active from images
+const removeActiveClassFromImages = () => {
+  Array.from(citiesDiv).forEach((el) => {
+    el.querySelector(".select-place__city-image").classList.remove("active");
+  });
+};
+
+// Showing activated image
+cityContainer.addEventListener("click", (e) => {
+  if (!e.target.closest(".select-place__city")) {
+    return;
+  }
+
+  removeActiveClassFromImages();
+
+  e.target
+    .closest(".select-place__city")
+    .querySelector(".select-place__city-image")
+    .classList.add("active");
+});
 
 class Weather {
   constructor(location, temp, clouds, chanceOfRain, date) {
@@ -117,7 +157,7 @@ class App {
 
     // EVENT LISTENERS
     Array.from(citiesDiv).forEach((element, i) =>
-      element.addEventListener("click", () => {
+      element.addEventListener("click", (e) => {
         this.loadData(locations[i][0], locations[i][1]);
       })
     );
@@ -382,13 +422,18 @@ class App {
   //
   async checkPressedKey(e) {
     if (e.keyCode === 13) {
+      // Guard
+      if (!e.target.value) {
+        return;
+      }
+
       await this.getLocationFromName(e.target.value);
       e.target.value = "";
       e.target.blur();
 
-      document
-        .querySelector(".search__input")
-        .classList.remove("search__input--open");
+      e.target.classList.remove("search__input--open");
+
+      removeActiveClassFromImages();
     }
   }
 }
