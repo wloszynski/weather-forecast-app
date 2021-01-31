@@ -1,6 +1,6 @@
 "use strict";
 
-import { OWM_API_KEY, GC_API_KEY } from "./config.js";
+import { OWM_API_KEY } from "./config.js";
 
 // VARIABLES FOR SEARCH
 const widgetSearch = document.querySelector(".search__input");
@@ -33,6 +33,9 @@ const forecastContainer = document.querySelector(
 const cityContainer = document.querySelector(".select-place__cities");
 const citiesDiv = document.querySelectorAll(".select-place__city");
 
+// VARIABLE FOR GRADIENT BACKGROUND
+const gradientBg = document.querySelector(".gradientBg");
+
 // EVENT LISTENERS
 
 // Logo as theme switch
@@ -41,9 +44,11 @@ document.querySelector("#logo").addEventListener("click", () => {
   if (aside.style.backgroundImage === 'url("../img/landscape-light.svg")') {
     aside.style.backgroundImage = 'url("../img/sky.svg")';
     aside.style.color = "white";
+    gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
   } else {
     aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
     aside.style.color = "#0008";
+    gradientBg.style.background = "linear-gradient(to top,#008cbc,#b1dee8)";
   }
 });
 
@@ -111,6 +116,20 @@ class Weather {
     this.chanceOfRain = chanceOfRain;
     this.date = date;
   }
+}
+
+// Change color theme when later than 6:OOPM
+const date = new Date();
+const hours = date.getHours();
+
+if (hours < 18) {
+  aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
+  aside.style.color = "#0008";
+  gradientBg.style.background = "linear-gradient(to top,#008cbc,#b1dee8)";
+} else {
+  aside.style.backgroundImage = 'url("../img/sky.svg")';
+  aside.style.color = "white";
+  gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
 }
 
 // class for the weather-widget div
@@ -374,7 +393,7 @@ class App {
             <div class="weather-information__details__image">
               <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
             </div>
-            <span class="weather-information__details__temp">+20C</span>
+            <span class="weather-information__details__temp">+20°C</span>
             <div class="weather-information__details__humidity">
               <span>${data.humidity}%</span>
             </div>

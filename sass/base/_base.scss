@@ -29,3 +29,19 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+img {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+::selection {
+  background: $color-highlight; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: $color-highlight; /* Gecko Browsers */
+}

@@ -4,17 +4,41 @@
 
 @include respond(tab-land) {
   .gradientBg {
-    background: #43c6ac; /* fallback for old browsers */
+    // background: #43c6ac; /* fallback for old browsers */
+    // background: -webkit-linear-gradient(
+    //   to right,
+    //   #43c6ac,
+    //   #191654
+    // ); /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(
+    //   to right,
+    //   #43c6ac,
+    //   #191654
+    // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    background: #000428; /* fallback for old browsers */
     background: -webkit-linear-gradient(
-      to right,
-      #43c6ac,
-      #191654
+      to top,
+      #004e92,
+      #000428
     ); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(
-      to right,
-      #43c6ac,
-      #191654
+      to top,
+      #004e92,
+      #000428
     ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    // background: #134e5e; /* fallback for old browsers */
+    // background: -webkit-linear-gradient(
+    //   to top,
+    //   #71b280,
+    //   #134e5e
+    // ); /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(
+    //   to top,
+    //   #008cbc,
+    //   #b1dee8
+    // ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     grid-column: 1 / 7;
     grid-row: 1/3;
