@@ -50,7 +50,6 @@ document.querySelector("#logo").addEventListener("click", () => {
 // Showing input when search icon clicked
 Array.from(document.querySelectorAll(".search__icon")).forEach((element) =>
   element.addEventListener("click", (e) => {
-    console.log(e.target);
     if (e.target.id === "desktopSearch") {
       document
         .querySelector("#searchCity")
@@ -151,7 +150,7 @@ class App {
       [52.409538, 16.931992],
       [52.229676, 21.012229],
       [60.192059, 24.945831],
-      [48.137154, 11.576124],
+      [48.1351253, 11.5819806],
       [40.73061, -73.935242]
     );
 
@@ -212,7 +211,9 @@ class App {
   async getCityName(lat, lng) {
     return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
       .then((response) => response.json())
-      .then((data) => data.city)
+      .then((data) => {
+        return `${data.city}, ${data.country}`;
+      })
       .catch((err) => console.error(err));
   }
 
@@ -233,7 +234,6 @@ class App {
             );
           }
         }
-        console.log(data);
         this.loadData(data.latt, data.longt);
       })
       .catch((err) => {});
@@ -366,9 +366,7 @@ class App {
     weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
-      console.log(data);
       const forecast = `
-
       <div class="weather-information__details">
             <span class="weather-information__details__title">${this.getDayOfTheWeek(
               data.dt
@@ -387,8 +385,8 @@ class App {
 
       weatherForecasts.push(forecast);
     }
-    widget.style.opacity = "1";
 
+    widget.style.opacity = "1";
     forecastContainer.innerHTML = weatherForecasts.join(" ");
   }
 
