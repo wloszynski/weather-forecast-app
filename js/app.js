@@ -38,6 +38,11 @@ const gradientBg = document.querySelector(".gradientBg");
 const mapContainer = document.querySelector(".map");
 const mapIcon = document.querySelector(".map__icon");
 
+// VARIABLES FOR ADDING CURRENT(CUSTOM) CITY
+const customCity = document.querySelector(".custom-city");
+const customCityImg = document.querySelector(".custom-city__img");
+const customCityName = document.querySelector(".custom-city__name");
+
 // EVENT LISTENERS
 
 // Logo as theme switch
@@ -227,22 +232,27 @@ class App {
       [52.409538, 16.931992],
       [52.229676, 21.012229],
       [60.192059, 24.945831],
-      [48.1351253, 11.5819806],
-      [40.73061, -73.935242]
+      [48.1351253, 11.5819806]
     );
 
     // EVENT LISTENERS
     Array.from(citiesDiv).forEach((element, i) =>
       element.addEventListener("click", (e) => {
-        this.loadData(locations[i][0], locations[i][1]);
+        if (i !== 4) {
+          this.loadData(locations[i][0], locations[i][1]);
+        }
       })
     );
 
+    // Adding keyup listener for checking user input
     Array.from(searchInputs).forEach((element, i) =>
       element.addEventListener("keyup", (e) => {
         this.checkPressedKey(e);
       })
     );
+
+    // Adding event listener of click on custom city
+    customCity.addEventListener("click", this.setCustomCity);
 
     // Get user position and print data
     this.getPosition();
@@ -572,6 +582,19 @@ class App {
       this.loadData(lat, lng);
     });
   }
+
+  // Setting custom city
+  setCustomCity = (e) => {
+    customCityName.textContent = widgetLocation.textContent;
+    customCityImg.src =
+      "https://source.unsplash.com/random/1920x1080?city,village";
+    customCityImg.alt = customCity.textContent;
+    customCity.removeEventListener("click", this.setCustomCity);
+
+    customCity.addEventListener("click", () => {
+      this.getLocationFromName(customCityName.textContent);
+    });
+  };
 }
 
 new App();
