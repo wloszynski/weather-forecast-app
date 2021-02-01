@@ -10,14 +10,12 @@
 @import "components/selectedWeatherDate";
 @import "components/search";
 
-@import "layout/aside";
-@import "layout/citySelector";
-@import "layout/chanceOfRain";
-@import "layout/footer";
-@import "layout/gradientBg";
-@import "layout/navigation";
-@import "layout/selectedWeather";
-@import "layout/selectPlace";
-@import "layout/weatherInformation";
+@import "components/aside";
+@import "components/citySelector";
+@import "components/gradientBg";
+@import "components/navigation";
+@import "components/selectedWeather";
+@import "components/selectPlace";
+@import "components/weatherInformation";
 
 @import "pages/root";

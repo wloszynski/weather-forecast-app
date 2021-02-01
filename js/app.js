@@ -385,6 +385,7 @@ class App {
     weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
+      console.log(data);
       const forecast = `
       <div class="weather-information__details">
             <span class="weather-information__details__title">${this.getDayOfTheWeek(
@@ -393,7 +394,9 @@ class App {
             <div class="weather-information__details__image">
               <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
             </div>
-            <span class="weather-information__details__temp">+20°C</span>
+            <span class="weather-information__details__temp">${
+              data.temp.day > 0 ? "+" + data.temp.day : data.temp.day
+            }</span>
             <div class="weather-information__details__humidity">
               <span><i class="fas fa-tint"></i> ${data.humidity}%</span>
             </div>
