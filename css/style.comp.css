@@ -129,10 +129,10 @@ body {
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  text-align: left;
-  width: 11.5rem; }
+  text-align: left; }
   .selected-weather__date-img {
-    width: 5rem; }
+    width: 5rem;
+    margin-right: 0.5rem; }
     .selected-weather__date-img img {
       width: 100%; }
   .selected-weather__date-name {
