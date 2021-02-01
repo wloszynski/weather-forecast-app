@@ -15,23 +15,6 @@
 
     padding: 2rem 2rem 1rem 2rem;
 
-    &__search {
-      display: flex;
-      align-items: center;
-      & input {
-        font-family: inherit;
-
-        border-radius: 10px;
-        border: none;
-      }
-
-      & i {
-        margin-left: 1rem;
-        font-size: 2rem;
-        cursor: pointer;
-      }
-    }
-
     &__title {
       display: flex;
       justify-content: space-between;

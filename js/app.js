@@ -6,6 +6,7 @@ import { OWM_API_KEY } from "./config.js";
 const searchInputs = document.querySelectorAll(".search");
 const widgetSearch = document.querySelector(".search__input");
 const searchIcons = document.querySelectorAll(".search__icon");
+const searchSuggestions = document.querySelectorAll(".search__suggestions");
 
 // VARIABLES FOR WIDGET
 const aside = document.querySelector(".aside");
@@ -73,12 +74,19 @@ document.addEventListener(
   "click",
   (event) => {
     if (!event.target.classList.contains("search__input--open")) {
-      widgetSearch.classList.remove("search__input--open");
-    }
-    if (!event.target.classList.contains("search__input--open")) {
-      document
-        .querySelector("#searchCity")
-        .classList.remove("search__input--open");
+      searchInputs.forEach((input) => {
+        {
+          const searchInput = input.querySelector(".search__input");
+          clearInput(searchInput);
+          searchInput.classList.remove("search__input--open");
+        }
+      });
+
+      searchSuggestions.forEach((searchSuggestion) => {
+        {
+          searchSuggestion.classList.add("search__suggestions--hidden");
+        }
+      });
     }
   },
   true
@@ -105,15 +113,25 @@ cityContainer.addEventListener("click", (e) => {
     .classList.add("active");
 });
 
-class Weather {
-  constructor(location, temp, clouds, chanceOfRain, date) {
-    this.location = location;
-    this.temp = temp;
-    this.clouds = clouds;
-    this.chanceOfRain = chanceOfRain;
-    this.date = date;
+// FUNCTIONS
+
+// Clear input element and blur
+const clearInput = (inputElement) => {
+  inputElement.value = "";
+  inputElement.blur();
+  inputElement.classList.remove("search__input--open");
+  inputElement
+    .closest("div")
+    .querySelector(".search__suggestions")
+    .classList.add("search__suggestions--hidden");
+};
+
+// Remove all children from parent element
+const removeChildren = (parentElement) => {
+  while (parentElement.firstChild) {
+    parentElement.removeChild(parentElement.firstChild);
   }
-}
+};
 
 // Change color theme when later than 6:OOPM
 const date = new Date();
@@ -127,6 +145,31 @@ if (hours > 8 && hours < 18) {
   aside.style.backgroundImage = 'url("../img/sky.svg")';
   aside.style.color = "white";
   gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
+}
+
+// Replacing polish characters to latin
+const removePolishAccents = (string) => {
+  const accents =
+    "ÀÁÂÃÄÅĄàáâãäåąßÒÓÔÕÕÖØÓòóôõöøóÈÉÊËĘèéêëęðÇĆçćÐÌÍÎÏìíîïÙÚÛÜùúûüÑŃñńŠŚšśŸÿýŽŻŹžżź";
+  const accentsOut =
+    "AAAAAAAaaaaaaaBOOOOOOOOoooooooEEEEEeeeeeeCCccDIIIIiiiiUUUUuuuuNNnnSSssYyyZZZzzz";
+  return string
+    .split("")
+    .map((letter, index) => {
+      const accentIndex = accents.indexOf(letter);
+      return accentIndex !== -1 ? accentsOut[accentIndex] : letter;
+    })
+    .join("");
+};
+
+class Weather {
+  constructor(location, temp, clouds, chanceOfRain, date) {
+    this.location = location;
+    this.temp = temp;
+    this.clouds = clouds;
+    this.chanceOfRain = chanceOfRain;
+    this.date = date;
+  }
 }
 
 // class for the weather-widget div
@@ -159,6 +202,7 @@ class WeatherForecast extends Weather {
 
 class App {
   weatherWidget;
+  citiesArray;
 
   constructor() {
     // VARIABLES FOR CITIES LOCATIONS
@@ -178,13 +222,26 @@ class App {
     );
 
     Array.from(searchInputs).forEach((element, i) =>
-      element.addEventListener("keypress", (e) => {
+      element.addEventListener("keyup", (e) => {
         this.checkPressedKey(e);
       })
     );
 
     // Get user position and print data
     this.getPosition();
+
+    this.loadCities();
+  }
+
+  async loadCities() {
+    this.citiesArray = await fetch(
+      `https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => console.error(err));
   }
 
   // Getting user position -> lat and lng
@@ -428,6 +485,14 @@ class App {
 
   // If input is target and enter was pressed search for input value
   async checkPressedKey(e) {
+    const searchSuggestion = e.target
+      .closest("div")
+      .querySelector(".search__suggestions");
+
+    searchSuggestion.classList.remove("search__suggestions--hidden");
+
+    let cities = [];
+
     if (e.keyCode === 13) {
       // Guard
       if (!e.target.value) {
@@ -435,12 +500,34 @@ class App {
       }
 
       await this.getLocationFromName(e.target.value);
-      e.target.value = "";
-      e.target.blur();
-
-      e.target.classList.remove("search__input--open");
-
+      clearInput(e.target);
       removeActiveClassFromImages();
+    } else if (e.target.value.length >= 2) {
+      removeChildren(searchSuggestion);
+
+      cities = this.citiesArray.filter(
+        (el) =>
+          removePolishAccents(el.name)
+            .toLowerCase()
+            .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
+      );
+
+      // Displaying only 4 first results
+      for (let i = 0; i < 4; i++) {
+        // Guard if cities[i] does not exist
+        if (!cities[i]) break;
+
+        const city = document.createElement("LI");
+        city.classList.add("search__suggestions__item");
+        city.textContent = `${cities[i].name}, ${cities[i].country} `;
+        city.addEventListener("click", () => {
+          this.getLocationFromName(cities[i].name);
+          clearInput(e.target);
+        });
+        searchSuggestion.appendChild(city);
+      }
+    } else {
+      removeChildren(searchSuggestion);
     }
   }
 }
