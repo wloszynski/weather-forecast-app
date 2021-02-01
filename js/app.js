@@ -34,6 +34,10 @@ const citiesDiv = document.querySelectorAll(".select-place__city");
 // VARIABLE FOR GRADIENT BACKGROUND
 const gradientBg = document.querySelector(".gradientBg");
 
+// VARIABLES FOR MAP
+const mapContainer = document.querySelector(".map");
+const mapIcon = document.querySelector(".map__icon");
+
 // EVENT LISTENERS
 
 // Logo as theme switch
@@ -113,6 +117,11 @@ cityContainer.addEventListener("click", (e) => {
     .classList.add("active");
 });
 
+// Showing map on map__icon click
+mapIcon.addEventListener("click", () => {
+  mapContainer.classList.remove("map--hidden");
+});
+
 // FUNCTIONS
 
 // Clear input element and blur
@@ -162,6 +171,8 @@ const removePolishAccents = (string) => {
     .join("");
 };
 
+// basic class for weather
+
 class Weather {
   constructor(location, temp, clouds, chanceOfRain, date) {
     this.location = location;
@@ -201,8 +212,14 @@ class WeatherForecast extends Weather {
 }
 
 class App {
+  // weather variables
   weatherWidget;
   citiesArray;
+
+  // map variables
+  map;
+  mapZoomLevel = 13;
+  mapEvent;
 
   constructor() {
     // VARIABLES FOR CITIES LOCATIONS
@@ -230,7 +247,11 @@ class App {
     // Get user position and print data
     this.getPosition();
 
+    // Fetch cities from world-cities API
     this.loadCities();
+
+    // Load map for Poznan
+    this.loadMap(52.409538, 16.931992);
   }
 
   async loadCities() {
@@ -529,6 +550,27 @@ class App {
     } else {
       removeChildren(searchSuggestion);
     }
+  }
+
+  // Load map
+  loadMap(lat, lng) {
+    // console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
+
+    const coords = [lat, lng];
+
+    this.map = L.map("map").setView(coords, this.mapZoomLevel);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+
+    // Handling clicks on map
+    this.map.on("click", (event) => {
+      mapContainer.classList.add("map--hidden");
+      ({ lat, lng } = event.latlng);
+      this.loadData(lat, lng);
+    });
   }
 }
 
