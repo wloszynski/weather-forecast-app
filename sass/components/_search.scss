@@ -78,11 +78,11 @@
   }
 
   & #desktopSearch {
-    transition: all 0.3s;
+    transition: all 0.5s;
     font-size: 2rem;
 
     &:hover {
-      font-size: 2.4rem;
+      transform: scale(1.2);
     }
   }
 }
