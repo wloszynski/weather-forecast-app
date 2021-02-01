@@ -241,8 +241,8 @@ class App {
       .then((data) => {
         if (!data.latt) {
           if (data.error.code === "018") {
-            alert("Could not find provided city, try again.");
-            throw new Error("Could not find provided city");
+            alert("Could not find given city, try again.");
+            throw new Error("Could not find given city");
           }
           if (data.error.code === ("006" || "008")) {
             alert("Request Throttled. Over Rate limit: up to 2 per sec.");
