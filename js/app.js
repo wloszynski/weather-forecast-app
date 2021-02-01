@@ -122,7 +122,7 @@ class Weather {
 const date = new Date();
 const hours = date.getHours();
 
-if (hours < 18) {
+if (hours > 8 && hours < 18) {
   aside.style.backgroundImage = 'url("../img/landscape-light.svg")';
   aside.style.color = "#0008";
   gradientBg.style.background = "linear-gradient(to top,#008cbc,#b1dee8)";
