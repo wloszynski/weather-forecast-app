@@ -393,7 +393,7 @@ class App {
             </div>
             <span class="weather-information__details__item__temp">${
               data.temp.day > 0 ? "+" + data.temp.day : data.temp.day
-            }</span>
+            }°C</span>
             <div class="weather-information__details__item__humidity">
               <span><i class="fas fa-tint"></i> ${data.humidity}%</span>
             </div>
