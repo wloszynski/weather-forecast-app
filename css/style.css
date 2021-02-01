@@ -99,28 +99,6 @@ body {
   100% {
     box-shadow: 25px 60px rgba(255, 255, 255, 0), 50px 60px rgba(255, 255, 255, 0), 75px 50px rgba(255, 255, 255, 0), 100px 70px rgba(255, 255, 255, 0), 125px 70px rgba(255, 255, 255, 0), 150px 60px rgba(255, 255, 255, 0), 25px 80px rgba(255, 255, 255, 0), 50px 80px rgba(255, 255, 255, 0), 75px 70px rgba(255, 255, 255, 0), 100px 60px rgba(255, 255, 255, 0), 125px 30px rgba(255, 255, 255, 0), 150px 30px rgba(255, 255, 255, 0); } }
 
-.nav__photo {
-  height: 4rem;
-  padding: 0.2rem; }
-  .nav__photo img {
-    height: 100%; }
-
-.selected-weather__date {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
-  text-align: left; }
-  .selected-weather__date-img {
-    width: 5rem;
-    margin-right: 0.5rem; }
-    .selected-weather__date-img img {
-      width: 100%; }
-  .selected-weather__date-name {
-    font-size: 2rem; }
-  .selected-weather__date-content {
-    font-size: 1.2rem; }
-
 .search {
   display: flex;
   justify-content: flex-start;
@@ -169,17 +147,6 @@ body {
       height: 55rem;
       width: 35rem; } }
 
-.city-selector {
-  grid-column: 1 / end;
-  height: 20rem;
-  padding: 1rem 0rem;
-  display: flex;
-  justify-content: center;
-  align-items: center; }
-  @media only screen and (min-width: 75em) {
-    .city-selector {
-      display: none; } }
-
 .gradientBg {
   display: none; }
 
@@ -206,9 +173,13 @@ body {
   align-items: center;
   align-content: center; }
   .nav #logo {
+    height: 4rem;
+    padding: 0.2rem;
     transition: all 0.3s;
     cursor: pointer;
     animation: goOut 0.7s 7s 6; }
+    .nav #logo img {
+      height: 100%; }
   .nav #logo:hover {
     transform: scale(1.2); }
   @media only screen and (min-width: 75em) {
@@ -217,38 +188,6 @@ body {
       padding: 5rem 0 0 0; }
       .nav #searchMobDiv {
         display: none; } }
-
-.selected-weather {
-  grid-column: 1 / end;
-  height: 35rem;
-  margin-top: -5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  justify-items: center;
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  transition: opacity 0.5s; }
-  .selected-weather__temp {
-    line-height: 10rem;
-    font-size: 10rem;
-    font-weight: 300; }
-    .selected-weather__temp-sup {
-      vertical-align: top;
-      font-size: 3rem;
-      position: relative;
-      top: -2rem; }
-  .selected-weather__location {
-    font-size: 2.5rem; }
-  .selected-weather__additional, .selected-weather__air, .selected-weather__humidity {
-    font-size: 1.5rem;
-    font-weight: 600; }
-  .selected-weather__additional {
-    width: 25rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center; }
 
 .select-place {
   display: none; }
@@ -333,7 +272,7 @@ body {
     color: rgba(0, 0, 0, 0.5); }
     .weather-information__period .active {
       color: white; }
-  .weather-information__details-container {
+  .weather-information__details {
     display: flex;
     align-items: center;
     align-content: center;
@@ -341,7 +280,7 @@ body {
     flex-direction: column;
     width: 100vw;
     transition: all 0.5s; }
-  .weather-information__details {
+  .weather-information__details__item {
     font-size: 1.7rem;
     display: flex;
     background-color: rgba(255, 255, 255, 0.15);
@@ -354,9 +293,9 @@ body {
     align-items: center;
     text-align: center;
     margin-bottom: 2rem; }
-    .weather-information__details__image {
+    .weather-information__details__item__image {
       width: 6rem; }
-      .weather-information__details__image img {
+      .weather-information__details__item__image img {
         width: 100%;
         min-height: 100%; }
   .weather-information-date {
@@ -382,13 +321,13 @@ body {
         margin-bottom: 2rem; }
         .weather-information__period span {
           margin-right: 8rem; }
-      .weather-information__details-container {
+      .weather-information__details {
         margin-top: -3rem;
         padding-left: 2rem;
         height: 22rem;
         flex-direction: row;
         width: 70rem; }
-      .weather-information__details {
+      .weather-information__details__item {
         font-size: 1.2rem;
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(5px);
@@ -401,13 +340,60 @@ body {
         text-align: center;
         margin-right: 2rem;
         transition: all 0.3s; }
-        .weather-information__details__image {
+        .weather-information__details__item__image {
           width: 6rem; }
-          .weather-information__details__image img {
+          .weather-information__details__item__image img {
             width: 100%;
             min-height: 100%; }
-      .weather-information__details:hover {
+      .weather-information__details__item:hover {
         transform: scale(1.2); } }
+
+.widget {
+  grid-column: 1 / end;
+  height: 35rem;
+  margin-top: -5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  transition: opacity 0.5s; }
+  .widget__date {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    text-align: left; }
+    .widget__date-img {
+      width: 5rem;
+      margin-right: 0.5rem; }
+      .widget__date-img img {
+        width: 100%; }
+    .widget__date-name {
+      font-size: 2rem; }
+    .widget__date-content {
+      font-size: 1.2rem; }
+  .widget__temp {
+    line-height: 10rem;
+    font-size: 10rem;
+    font-weight: 300; }
+    .widget__temp-sup {
+      vertical-align: top;
+      font-size: 3rem;
+      position: relative;
+      top: -2rem; }
+  .widget__location {
+    font-size: 2.5rem; }
+  .widget__additional, .widget__air, .widget__humidity {
+    font-size: 1.5rem;
+    font-weight: 600; }
+  .widget__additional {
+    width: 25rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center; }
 
 #root {
   display: grid;

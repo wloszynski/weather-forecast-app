@@ -1,4 +1,4 @@
-.selected-weather {
+.widget {
   grid-column: 1 / end;
   height: 35rem;
 
@@ -13,6 +13,30 @@
   text-align: center;
 
   transition: opacity 0.5s;
+
+  &__date {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+    text-align: left;
+
+    &-img {
+      width: 5rem;
+      margin-right: 0.5rem;
+
+      & img {
+        width: 100%;
+      }
+    }
+    &-name {
+      font-size: 2rem;
+    }
+    &-content {
+      font-size: 1.2rem;
+    }
+  }
 
   &__temp {
     line-height: 10rem;

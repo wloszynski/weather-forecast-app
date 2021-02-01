@@ -3,30 +3,27 @@
 import { OWM_API_KEY } from "./config.js";
 
 // VARIABLES FOR SEARCH
-const widgetSearch = document.querySelector(".search__input");
 const searchInputs = document.querySelectorAll(".search");
+const widgetSearch = document.querySelector(".search__input");
+const searchIcons = document.querySelectorAll(".search__icon");
 
 // VARIABLES FOR WIDGET
 const aside = document.querySelector(".aside");
-const widget = document.querySelector(".selected-weather");
-const widgetTemp = document.querySelector(".selected-weather__temp");
-const widgetLocation = document.querySelector(".selected-weather__location");
-const widgetFeelsLike = document.querySelector(
-  ".selected-weather__additional-feel-temp"
-);
+const widget = document.querySelector(".widget");
+const widgetTemp = document.querySelector(".widget__temp");
+const widgetLocation = document.querySelector(".widget__location");
+const widgetFeelsLike = document.querySelector(".widget__additional-feel-temp");
 const widgetSunset = document.querySelector(".additional-sunset-time");
-const widgetAirQuality = document.querySelector(
-  ".selected-weather__air-quality"
-);
+const widgetAirQuality = document.querySelector(".widget__air-quality");
 const widgetChanceOfRain = document.querySelector(
-  ".selected-weather__humidity-percentage"
+  ".widget__humidity-percentage"
 );
-const widgetDate = document.querySelector(".selected-weather__date-content");
+const widgetDate = document.querySelector(".widget__date-content");
 const widgetPhoto = document.querySelector("#widgetPhoto");
 
 // VARIABLES FOR WEATHER FORECAST
 const forecastContainer = document.querySelector(
-  ".weather-information__details-container"
+  ".weather-information__details"
 );
 
 // VARIABLES FOR IMAGES
@@ -196,6 +193,7 @@ class App {
       navigator.geolocation.getCurrentPosition(
         this.convertGeolocationItemToCoords.bind(this),
         () => {
+          // If failed load data for Poznan
           this.loadData(52.409538, 16.931992);
         }
       );
@@ -366,7 +364,7 @@ class App {
 
   // Displaying data in widget section
   displayWidget(weatherWidget) {
-    widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="selected-weather__temp-sup">&#8451;</sup>`;
+    widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="widget__temp-sup">&#8451;</sup>`;
     widgetLocation.textContent = weatherWidget.location;
     widgetAirQuality.textContent = weatherWidget.airQuality;
     widgetChanceOfRain.textContent = weatherWidget.chanceOfRain;
@@ -385,22 +383,21 @@ class App {
     weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
-      console.log(data);
       const forecast = `
-      <div class="weather-information__details">
-            <span class="weather-information__details__title">${this.getDayOfTheWeek(
+      <div class="weather-information__details__item">
+            <span class="weather-information__details__item__title">${this.getDayOfTheWeek(
               data.dt
             )}</span>
-            <div class="weather-information__details__image">
-              <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
+            <div class="weather-information__details__item__image">
+            <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
             </div>
-            <span class="weather-information__details__temp">${
+            <span class="weather-information__details__item__temp">${
               data.temp.day > 0 ? "+" + data.temp.day : data.temp.day
             }</span>
-            <div class="weather-information__details__humidity">
+            <div class="weather-information__details__item__humidity">
               <span><i class="fas fa-tint"></i> ${data.humidity}%</span>
             </div>
-            <div class="weather-information__details__wind">
+            <div class="weather-information__details__item__wind">
               <span><i class="fas fa-wind"></i> ${data.wind_speed} m/s</span>
             </div>
           </div>`;
@@ -429,7 +426,7 @@ class App {
     return 0;
   }
 
-  //
+  // If input is target and enter was pressed search for input value
   async checkPressedKey(e) {
     if (e.keyCode === 13) {
       // Guard

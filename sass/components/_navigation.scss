@@ -9,11 +9,17 @@
   align-content: center;
 
   #logo {
+    height: 4rem;
+    padding: 0.2rem;
     transition: all 0.3s;
     cursor: pointer;
-
     animation: goOut 0.7s 7s 6;
+
+    & img {
+      height: 100%;
+    }
   }
+
   #logo:hover {
     transform: scale(1.2);
   }
