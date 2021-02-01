@@ -84,7 +84,6 @@ document.addEventListener(
 
       searchSuggestions.forEach((searchSuggestion) => {
         {
-          console.log(searchSuggestion);
           searchSuggestion.classList.add("search__suggestions--hidden");
         }
       });
@@ -513,6 +512,7 @@ class App {
             .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
       );
 
+      // Displaying only 4 first results
       for (let i = 0; i < 4; i++) {
         // Guard if cities[i] does not exist
         if (!cities[i]) break;
