@@ -148,6 +148,21 @@ if (hours > 8 && hours < 18) {
   gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
 }
 
+// Replacing polish characters to latin
+const removePolishAccents = (string) => {
+  const accents =
+    "ÀÁÂÃÄÅĄàáâãäåąßÒÓÔÕÕÖØÓòóôõöøóÈÉÊËĘèéêëęðÇĆçćÐÌÍÎÏìíîïÙÚÛÜùúûüÑŃñńŠŚšśŸÿýŽŻŹžżź";
+  const accentsOut =
+    "AAAAAAAaaaaaaaBOOOOOOOOoooooooEEEEEeeeeeeCCccDIIIIiiiiUUUUuuuuNNnnSSssYyyZZZzzz";
+  return string
+    .split("")
+    .map((letter, index) => {
+      const accentIndex = accents.indexOf(letter);
+      return accentIndex !== -1 ? accentsOut[accentIndex] : letter;
+    })
+    .join("");
+};
+
 class Weather {
   constructor(location, temp, clouds, chanceOfRain, date) {
     this.location = location;
@@ -493,7 +508,9 @@ class App {
 
       cities = this.citiesArray.filter(
         (el) =>
-          el.name.toLowerCase().search(e.target.value.toLowerCase()) !== -1
+          removePolishAccents(el.name)
+            .toLowerCase()
+            .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
       );
 
       for (let i = 0; i < 4; i++) {
