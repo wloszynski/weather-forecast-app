@@ -1,13 +1,10 @@
-@import "abstracts/functions";
 @import "abstracts/mixins";
 @import "abstracts/variables";
 
 @import "base/animations";
 @import "base/base";
 @import "base/typography";
-@import "base/utilities";
 
-@import "components/citySelectorBox";
 @import "components/loader";
 @import "components/navPhoto";
 @import "components/selectedWeatherDate";
@@ -18,8 +15,6 @@
 @import "layout/chanceOfRain";
 @import "layout/footer";
 @import "layout/gradientBg";
-@import "layout/grid";
-@import "layout/header";
 @import "layout/navigation";
 @import "layout/selectedWeather";
 @import "layout/selectPlace";

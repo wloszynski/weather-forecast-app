@@ -8,9 +8,14 @@
   align-items: center;
   align-content: center;
 
-  &__notification {
-    &-amount {
-    }
+  #logo {
+    transition: all 0.3s;
+    cursor: pointer;
+
+    animation: goOut 0.7s 7s 6;
+  }
+  #logo:hover {
+    transform: scale(1.2);
   }
 
   @include respond(tab-land) {
@@ -18,21 +23,8 @@
 
     padding: 5rem 0 0 0;
 
-    &__search {
-      display: none;
-    }
-
     & #searchMobDiv {
       display: none;
     }
-  }
-  #logo {
-    transition: all 0.3s;
-    cursor: pointer;
-
-    animation: goOut 1s 1s 3;
-  }
-  #logo:hover {
-    transform: scale(1.2);
   }
 }

@@ -19,7 +19,7 @@ const widgetAirQuality = document.querySelector(
   ".selected-weather__air-quality"
 );
 const widgetChanceOfRain = document.querySelector(
-  ".chance-of-rain__info-percentage"
+  ".selected-weather__humidity-percentage"
 );
 const widgetDate = document.querySelector(".selected-weather__date-content");
 const widgetPhoto = document.querySelector("#widgetPhoto");

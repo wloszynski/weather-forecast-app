@@ -32,7 +32,8 @@
   }
 
   &__additional,
-  &__air {
+  &__air,
+  &__humidity {
     font-size: 1.5rem;
     font-weight: 600;
   }
@@ -43,8 +44,4 @@
     justify-content: space-around;
     align-items: center;
   }
-}
-.chance-of-rain__info {
-  font-size: 1.3rem;
-  font-weight: 600;
 }
