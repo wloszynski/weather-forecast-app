@@ -1,7 +1,11 @@
 "use strict";
 
 // API KEY
+//OpenWeatherMap
 const OWM_API_KEY = "c7b5912d4d574f33e4e2e940d08f6f51";
+
+// Locationiq
+const LIQ_API_KEY = "pk.b23b6c8d644bdc89cca7e8976a5e1627";
 
 // VARIABLES FOR SEARCH
 const searchInputs = document.querySelectorAll(".search");
@@ -324,11 +328,11 @@ class App {
     widget.style.opacity = "0";
     removeActiveClassFromImages();
 
+    let location = await this.getCityName(lat, lng).then((loc) => loc);
+
     let airQuality = await this.getAirQualityData(lat, lng).then(
       (quality) => quality
     );
-
-    let location = await this.getCityName(lat, lng).then((loc) => loc);
 
     const weatherData = await this.getWeatherData(lat, lng);
 
@@ -341,20 +345,26 @@ class App {
 
   // Getting location using lat and lng -> Wroclaw, Poland
   async getCityName(lat, lng) {
-    return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    return await fetch(
+      `https://us1.locationiq.com/v1/reverse.php?key=${LIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
+    )
       .then((response) => response.json())
       .then((data) => {
-        return `${data.city}, ${data.country}`;
+        console.log(data);
+        return `${data.address.county}, ${data.address.country}`;
       })
       .catch((err) => console.error(err));
   }
 
   // Getting location using from city name
   async getLocationFromName(cityName) {
-    return await fetch(`https://geocode.xyz/${cityName}?json=1`)
+    return await fetch(
+      `https://us1.locationiq.com/v1/search.php?key=${LIQ_API_KEY}&format=json&q=${cityName}`
+    )
       .then((response) => response.json())
       .then((data) => {
-        if (!data.latt) {
+        // console.log(data[0]);
+        if (!data[0]) {
           if (data.error.code === "018") {
             alert("Could not find given city, try again.");
             throw new Error("Could not find given city");
@@ -366,7 +376,8 @@ class App {
             );
           }
         }
-        this.loadData(data.latt, data.longt);
+        console.log(data[0].lat, data[0].lon);
+        this.loadData(data[0].lat, data[0].lon);
       })
       .catch((err) => {
         console.error(err);
