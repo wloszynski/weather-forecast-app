@@ -55,6 +55,10 @@
     transform: translateX(0);
 
     transition: all 0.5s;
+
+    @include respond(tab-port) {
+      top: 2.6rem;
+    }
     @include respond(tab-land) {
       top: 3rem;
     }
@@ -65,7 +69,7 @@
       color: $color-black;
       cursor: pointer;
 
-      @include respond(tab-land) {
+      @include respond(tab-port) {
         font-size: 1rem;
       }
     }
