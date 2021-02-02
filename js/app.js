@@ -544,23 +544,33 @@ class App {
             .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
       );
 
+      const suggestionsContent = new DocumentFragment();
+
       // Displaying only 4 first results
       for (let i = 0; i < 4; i++) {
         // Guard if cities[i] does not exist
         if (!cities[i]) break;
-
-        const city = document.createElement("LI");
-        city.classList.add("search__suggestions__item");
-        city.textContent = `${cities[i].name}, ${cities[i].country} `;
-        city.addEventListener("click", () => {
-          this.getLocationFromName(cities[i].name);
-          clearInput(e.target);
-        });
-        searchSuggestion.appendChild(city);
+        suggestionsContent.appendChild(
+          this.createSuggestionLiElement(cities[i], e)
+        );
       }
+      searchSuggestion.appendChild(suggestionsContent);
     } else {
       removeChildren(searchSuggestion);
     }
+  }
+
+  // Creating search suggestion li content
+  createSuggestionLiElement(data, e) {
+    const city = document.createElement("LI");
+    city.classList.add("search__suggestions__item");
+    city.textContent = `${data.name}, ${data.country} `;
+    city.addEventListener("click", () => {
+      this.getLocationFromName(data.name);
+      clearInput(e.target);
+    });
+
+    return city;
   }
 
   // Load map
