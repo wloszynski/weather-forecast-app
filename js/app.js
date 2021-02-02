@@ -351,7 +351,14 @@ class App {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        return `${data.address.county}, ${data.address.country}`;
+        const country = data.address.country || "";
+        const city = data.address.city || data.address.county || "";
+
+        if (city) {
+          return `${city}, ${country}`;
+        }
+
+        return `${country}`;
       })
       .catch((err) => console.error(err));
   }
