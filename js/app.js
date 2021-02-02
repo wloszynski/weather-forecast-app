@@ -2,6 +2,7 @@
 
 // API KEY
 const OWM_API_KEY = "c7b5912d4d574f33e4e2e940d08f6f51";
+const GEO_API_KEY = "6166c2213490ba01c75dfe8f6c2c2d08";
 
 // VARIABLES FOR SEARCH
 const searchInputs = document.querySelectorAll(".search");
@@ -341,32 +342,24 @@ class App {
 
   // Getting location using lat and lng -> Wroclaw, Poland
   async getCityName(lat, lng) {
-    return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
+    return await fetch(
+      `http://api.positionstack.com/v1/reverse?access_key=${GEO_API_KEY}&query=${lat},${lng}&limit=1&output=json`
+    )
       .then((response) => response.json())
       .then((data) => {
-        return `${data.city}, ${data.country}`;
+        return `${data["data"][0].locality}, ${data["data"][0].country}`;
       })
       .catch((err) => console.error(err));
   }
 
   // Getting location using from city name
   async getLocationFromName(cityName) {
-    return await fetch(`https://geocode.xyz/${cityName}?json=1`)
+    return await fetch(
+      `http://api.positionstack.com/v1/forward?access_key=${GEO_API_KEY}&query=${cityName}&limit=1&output=json`
+    )
       .then((response) => response.json())
       .then((data) => {
-        if (!data.latt) {
-          if (data.error.code === "018") {
-            alert("Could not find given city, try again.");
-            throw new Error("Could not find given city");
-          }
-          if (data.error.code === ("006" || "008")) {
-            alert("Request Throttled. Over Rate limit: up to 2 per sec.");
-            throw new Error(
-              "Request Throttled. Over Rate limit: up to 2 per sec."
-            );
-          }
-        }
-        this.loadData(data.latt, data.longt);
+        this.loadData(data["data"][0].latitude, data["data"][0].longitude);
       })
       .catch((err) => {
         console.error(err);
