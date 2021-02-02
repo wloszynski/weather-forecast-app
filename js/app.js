@@ -161,6 +161,8 @@ if (hours > 8 && hours < 18) {
   gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
 }
 
+// UTILITY FUNCTIONS
+
 // Replacing polish characters to latin
 const removePolishAccents = (string) => {
   const accents =
@@ -174,6 +176,35 @@ const removePolishAccents = (string) => {
       return accentIndex !== -1 ? accentsOut[accentIndex] : letter;
     })
     .join("");
+};
+
+// Converting Unix dt to HH:MM
+const convertUnixToTime = (dt) => {
+  const date = new Date(dt * 1000);
+  return `${date.getHours()}:${date.getMinutes()}`;
+};
+
+// Convert date to Fri, Jan 29
+const getDayOfTheWeek = (dt) => {
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const dayNum = new Date(dt * 1000).getDay();
+
+  return weekdays[dayNum];
+};
+
+// Convert dt to weekday
+const shortDateFormat = () => {
+  const fullDate = Date();
+  const fullDateArray = fullDate.split(" ");
+  return `${fullDateArray[0]}, ${fullDateArray[1]} ${fullDateArray[2]}`;
 };
 
 // basic class for weather
@@ -392,9 +423,9 @@ class App {
       temp.toFixed(1),
       clouds,
       humidity,
-      this.shortDateFormat(),
+      shortDateFormat(),
       feels_like,
-      this.convertUnixToTime(sunset),
+      convertUnixToTime(sunset),
       airQuality
     );
   }
@@ -420,37 +451,6 @@ class App {
     );
   }
 
-  // Creating WeatherForecast Array
-  getWeatherForecastArray() {}
-
-  // Converting Unix dt to HH:MM
-  convertUnixToTime(dt) {
-    const date = new Date(dt * 1000);
-    return `${date.getHours()}:${date.getMinutes()}`;
-  }
-
-  // Convert date to Fri, Jan 29
-  getDayOfTheWeek(dt) {
-    const weekdays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const dayNum = new Date(dt * 1000).getDay();
-    return weekdays[dayNum];
-  }
-
-  // Convert dt to weekday
-  shortDateFormat() {
-    const fullDate = Date();
-    const fullDateArray = fullDate.split(" ");
-    return `${fullDateArray[0]}, ${fullDateArray[1]} ${fullDateArray[2]}`;
-  }
-
   // Displaying data in widget section
   displayWidget(weatherWidget) {
     widgetTemp.innerHTML = `${weatherWidget.temp}<sup class="widget__temp-sup">&#8451;</sup>`;
@@ -466,19 +466,38 @@ class App {
 
   // Displaying weather forecast
   displayForecasts(weatherData) {
-    let weatherForecasts = new Array();
+    // Remove cloud loading screen
+    removeChildren(forecastContainer);
+
+    // Creating Document Fragment for more efficient DOM usage
+    let weatherForecasts = new DocumentFragment();
 
     // Deleting 8th array
     weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
-      const forecast = `
-      <div class="weather-information__details__item">
-            <span class="weather-information__details__item__title">${this.getDayOfTheWeek(
+      // Creating forecast element and appending  it to weatherForecasts DocumentFragment
+      weatherForecasts.appendChild(this.createForecastElement(data));
+    }
+
+    // Displaying widget and forecast information container
+    widget.style.opacity = "1";
+    forecastContainer.appendChild(weatherForecasts);
+  }
+
+  // Create forecast Element
+  createForecastElement(data) {
+    const forecastElement = document.createElement("div");
+    forecastElement.classList.add("weather-information__details__item");
+
+    const forecastTemplate = `
+            <span class="weather-information__details__item__title">${getDayOfTheWeek(
               data.dt
             )}</span>
             <div class="weather-information__details__item__image">
-            <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
+            <img src="./img/${this.checkIfCloudy(
+              data.clouds
+            )}.svg" alt="clouds percentage" />
             </div>
             <span class="weather-information__details__item__temp">${
               data.temp.day > 0 ? "+" + data.temp.day : data.temp.day
@@ -489,30 +508,36 @@ class App {
             <div class="weather-information__details__item__wind">
               <span><i class="fas fa-wind"></i> ${data.wind_speed} m/s</span>
             </div>
-          </div>`;
+          `;
 
-      weatherForecasts.push(forecast);
-    }
+    forecastElement.insertAdjacentHTML("afterbegin", forecastTemplate);
 
-    widget.style.opacity = "1";
-    forecastContainer.innerHTML = weatherForecasts.join(" ");
+    return forecastElement;
   }
 
   // Checking the cloud percentage and defining which photo should be selected
   checkIfCloudy(cloudy) {
+    const cloudNamesArray = [
+      "cloudless",
+      "few-clouds",
+      "rather-cloudy",
+      "cloudy",
+      "overcast",
+    ];
+
     if (cloudy < 20) {
-      return 0;
+      return cloudNamesArray[0];
     } else if (cloudy < 40) {
-      return 1;
+      return cloudNamesArray[1];
     } else if (cloudy < 60) {
-      return 2;
+      return cloudNamesArray[2];
     } else if (cloudy < 80) {
-      return 3;
+      return cloudNamesArray[3];
     } else if (cloudy < 100) {
-      return 4;
+      return cloudNamesArray[4];
     }
 
-    return 0;
+    return cloudNamesArray[0];
   }
 
   // If input is target and enter was pressed search for input value
@@ -544,23 +569,33 @@ class App {
             .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
       );
 
+      const suggestionsContent = new DocumentFragment();
+
       // Displaying only 4 first results
       for (let i = 0; i < 4; i++) {
-        // Guard if cities[i] does not exist
+        // Break if cities[i] does not exist
         if (!cities[i]) break;
-
-        const city = document.createElement("LI");
-        city.classList.add("search__suggestions__item");
-        city.textContent = `${cities[i].name}, ${cities[i].country} `;
-        city.addEventListener("click", () => {
-          this.getLocationFromName(cities[i].name);
-          clearInput(e.target);
-        });
-        searchSuggestion.appendChild(city);
+        suggestionsContent.appendChild(
+          this.createSuggestionLiElement(cities[i], e)
+        );
       }
+      searchSuggestion.appendChild(suggestionsContent);
     } else {
       removeChildren(searchSuggestion);
     }
+  }
+
+  // Creating search suggestion li content
+  createSuggestionLiElement(data, e) {
+    const city = document.createElement("LI");
+    city.classList.add("search__suggestions__item");
+    city.textContent = `${data.name}, ${data.country} `;
+    city.addEventListener("click", () => {
+      this.getLocationFromName(data.name);
+      clearInput(e.target);
+    });
+
+    return city;
   }
 
   // Load map
@@ -592,6 +627,7 @@ class App {
     customCityImg.alt = customCity.textContent;
     customCity.removeEventListener("click", this.setCustomCity);
 
+    // Get location data when clicked on image
     customCity.addEventListener("click", () => {
       this.getLocationFromName(customCityName.textContent);
     });
