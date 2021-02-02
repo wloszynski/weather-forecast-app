@@ -441,6 +441,7 @@ class App {
       "Saturday",
     ];
     const dayNum = new Date(dt * 1000).getDay();
+
     return weekdays[dayNum];
   }
 
@@ -466,14 +467,31 @@ class App {
 
   // Displaying weather forecast
   displayForecasts(weatherData) {
-    let weatherForecasts = new Array();
+    // Remove cloud loading screen
+    removeChildren(forecastContainer);
+
+    // Creating Document Fragment for more efficient DOM usage
+    let weatherForecasts = new DocumentFragment();
 
     // Deleting 8th array
     weatherData = weatherData.daily.splice(1, 5);
 
     for (const data of weatherData) {
-      const forecast = `
-      <div class="weather-information__details__item">
+      // Creating forecast element and appending  it to weatherForecasts DocumentFragment
+      weatherForecasts.appendChild(this.createForecastElement(data));
+    }
+
+    // Displaying widget and forecast information container
+    widget.style.opacity = "1";
+    forecastContainer.appendChild(weatherForecasts);
+  }
+
+  // Create forecast Element
+  createForecastElement(data) {
+    const forecastElement = document.createElement("div");
+    forecastElement.classList.add("weather-information__details__item");
+
+    const forecastTemplate = `
             <span class="weather-information__details__item__title">${this.getDayOfTheWeek(
               data.dt
             )}</span>
@@ -491,13 +509,11 @@ class App {
             <div class="weather-information__details__item__wind">
               <span><i class="fas fa-wind"></i> ${data.wind_speed} m/s</span>
             </div>
-          </div>`;
+          `;
 
-      weatherForecasts.push(forecast);
-    }
+    forecastElement.insertAdjacentHTML("afterbegin", forecastTemplate);
 
-    widget.style.opacity = "1";
-    forecastContainer.innerHTML = weatherForecasts.join(" ");
+    return forecastElement;
   }
 
   // Checking the cloud percentage and defining which photo should be selected
@@ -612,6 +628,7 @@ class App {
     customCityImg.alt = customCity.textContent;
     customCity.removeEventListener("click", this.setCustomCity);
 
+    // Get location data when clicked on image
     customCity.addEventListener("click", () => {
       this.getLocationFromName(customCityName.textContent);
     });
