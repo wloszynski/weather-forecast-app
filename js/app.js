@@ -599,7 +599,7 @@ class App {
     return city;
   }
 
-  // Load map
+  // Load leafty map
   loadMap(lat, lng) {
     const coords = [lat, lng];
 
