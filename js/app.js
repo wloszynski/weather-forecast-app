@@ -161,6 +161,8 @@ if (hours > 8 && hours < 18) {
   gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
 }
 
+// UTILITY FUNCTIONS
+
 // Replacing polish characters to latin
 const removePolishAccents = (string) => {
   const accents =
@@ -174,6 +176,35 @@ const removePolishAccents = (string) => {
       return accentIndex !== -1 ? accentsOut[accentIndex] : letter;
     })
     .join("");
+};
+
+// Converting Unix dt to HH:MM
+const convertUnixToTime = (dt) => {
+  const date = new Date(dt * 1000);
+  return `${date.getHours()}:${date.getMinutes()}`;
+};
+
+// Convert date to Fri, Jan 29
+const getDayOfTheWeek = (dt) => {
+  const weekdays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const dayNum = new Date(dt * 1000).getDay();
+
+  return weekdays[dayNum];
+};
+
+// Convert dt to weekday
+const shortDateFormat = () => {
+  const fullDate = Date();
+  const fullDateArray = fullDate.split(" ");
+  return `${fullDateArray[0]}, ${fullDateArray[1]} ${fullDateArray[2]}`;
 };
 
 // basic class for weather
@@ -392,9 +423,9 @@ class App {
       temp.toFixed(1),
       clouds,
       humidity,
-      this.shortDateFormat(),
+      shortDateFormat(),
       feels_like,
-      this.convertUnixToTime(sunset),
+      convertUnixToTime(sunset),
       airQuality
     );
   }
@@ -418,38 +449,6 @@ class App {
       minTemp,
       maxTemp
     );
-  }
-
-  // Creating WeatherForecast Array
-  getWeatherForecastArray() {}
-
-  // Converting Unix dt to HH:MM
-  convertUnixToTime(dt) {
-    const date = new Date(dt * 1000);
-    return `${date.getHours()}:${date.getMinutes()}`;
-  }
-
-  // Convert date to Fri, Jan 29
-  getDayOfTheWeek(dt) {
-    const weekdays = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    const dayNum = new Date(dt * 1000).getDay();
-
-    return weekdays[dayNum];
-  }
-
-  // Convert dt to weekday
-  shortDateFormat() {
-    const fullDate = Date();
-    const fullDateArray = fullDate.split(" ");
-    return `${fullDateArray[0]}, ${fullDateArray[1]} ${fullDateArray[2]}`;
   }
 
   // Displaying data in widget section
@@ -492,7 +491,7 @@ class App {
     forecastElement.classList.add("weather-information__details__item");
 
     const forecastTemplate = `
-            <span class="weather-information__details__item__title">${this.getDayOfTheWeek(
+            <span class="weather-information__details__item__title">${getDayOfTheWeek(
               data.dt
             )}</span>
             <div class="weather-information__details__item__image">
