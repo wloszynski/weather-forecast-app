@@ -264,34 +264,28 @@ class App {
 
   constructor() {
     // EVENT LISTENERS
-
-    // Setting load data for images from select-city div
-    Array.from(citiesDiv).forEach((element, i) =>
-      element.addEventListener("click", (e) => {
-        if (i !== 4) {
-          this.loadData(element.dataset.lat, element.dataset.lng);
-        }
-      })
-    );
-
-    // Adding keyup listener for checking user input
-    Array.from(searchInputs).forEach((element, i) =>
-      element.addEventListener("keyup", (e) => {
-        this.checkPressedKey(e);
-      })
-    );
-
-    // Adding event listener of click on custom city
-    customCity.addEventListener("click", this.setCustomCity);
-
-    // Get user position and print data
-    this.getPosition();
-
-    // Fetch cities from world-cities API
-    this.loadCities();
-
-    // Load map for Poznan
-    this.loadMap(52.409538, 16.931992);
+    // // Setting load data for images from select-city div
+    // Array.from(citiesDiv).forEach((element, i) =>
+    //   element.addEventListener("click", (e) => {
+    //     if (i !== 4) {
+    //       this.loadData(element.dataset.lat, element.dataset.lng);
+    //     }
+    //   })
+    // );
+    // // Adding keyup listener for checking user input
+    // Array.from(searchInputs).forEach((element, i) =>
+    //   element.addEventListener("keyup", (e) => {
+    //     this.checkPressedKey(e);
+    //   })
+    // );
+    // // Adding event listener of click on custom city
+    // customCity.addEventListener("click", this.setCustomCity);
+    // // Get user position and print data
+    // this.getPosition();
+    // // Fetch cities from world-cities API
+    // this.loadCities();
+    // // Load map for Poznan
+    // this.loadMap(52.409538, 16.931992);
   }
 
   async loadCities() {
