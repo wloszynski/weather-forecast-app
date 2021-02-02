@@ -229,12 +229,14 @@ class WeatherWidget extends Weather {
     date,
     feelsLike,
     sunset,
-    airQuality
+    airQuality,
+    latlng
   ) {
     super(location, temp, clouds, chanceOfRain, date);
     this.feelsLike = feelsLike;
     this.sunset = sunset;
     this.airQuality = airQuality;
+    this.latlng = latlng;
   }
 }
 
@@ -422,7 +424,8 @@ class App {
       shortDateFormat(),
       feels_like,
       convertUnixToTime(sunset),
-      airQuality
+      airQuality,
+      [data.lat, data.lon]
     );
   }
 
@@ -456,6 +459,9 @@ class App {
     widgetFeelsLike.textContent = weatherWidget.feelsLike.toFixed(1);
     widgetSunset.textContent = weatherWidget.sunset;
     widgetDate.textContent = weatherWidget.date;
+
+    widget.dataset.lat = weatherWidget.latlng[0];
+    widget.dataset.lng = weatherWidget.latlng[1];
 
     widgetPhoto.src = `../img/${this.checkIfCloudy(weatherWidget.clouds)}.svg`;
   }
@@ -616,6 +622,8 @@ class App {
   // Setting custom city
   setCustomCity = (e) => {
     customCityName.textContent = widgetLocation.textContent;
+    customCity.dataset.lat = widget.dataset.lat;
+    customCity.dataset.lng = widget.dataset.lng;
     customCityImg.src =
       "https://source.unsplash.com/random/1920x1080?city,village";
     customCityImg.alt = customCity.textContent;
@@ -623,7 +631,7 @@ class App {
 
     // Get location data when clicked on image
     customCity.addEventListener("click", () => {
-      this.getLocationFromName(customCityName.textContent);
+      this.loadData(customCity.dataset.lat, customCity.dataset.lng);
     });
   };
 }
