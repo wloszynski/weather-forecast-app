@@ -6,12 +6,12 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  background-image: url("../img/sky.svg"), url("../img/landscape-light.svg");
+  // background-image: url("../img/sky.svg"), url("../img/landscape-light.svg");
 
-  background-size: cover;
-  background-position: 50% 50%;
+  // background-size: cover;
+  // background-position: 50% 50%;
 
-  transition: background-image 0.5s;
+  // transition: background-image 0.5s;
 
   @include respond(tab-land) {
     grid-column: 7 / 10;
