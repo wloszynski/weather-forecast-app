@@ -347,7 +347,12 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
-        return `${data["data"][0].locality}, ${data["data"][0].country}`;
+        const country = data["data"][0].country || "";
+        const city = data["data"][0].locality || "";
+        if (city) {
+          return `${city}, ${country}`;
+        }
+        return `${country}`;
       })
       .catch((err) => console.error(err));
   }
@@ -359,6 +364,10 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
+        if (!data["data"][0]) {
+          alert("Given city cannot be found");
+          throw new Error("Given city cannot be found");
+        }
         this.loadData(data["data"][0].latitude, data["data"][0].longitude);
       })
       .catch((err) => {
