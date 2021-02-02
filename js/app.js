@@ -478,7 +478,9 @@ class App {
               data.dt
             )}</span>
             <div class="weather-information__details__item__image">
-            <img src="./img/${this.checkIfCloudy(data.clouds)}.svg" alt="" />
+            <img src="./img/${this.checkIfCloudy(
+              data.clouds
+            )}.svg" alt="clouds percentage" />
             </div>
             <span class="weather-information__details__item__temp">${
               data.temp.day > 0 ? "+" + data.temp.day : data.temp.day
@@ -500,19 +502,27 @@ class App {
 
   // Checking the cloud percentage and defining which photo should be selected
   checkIfCloudy(cloudy) {
+    const cloudNamesArray = [
+      "cloudless",
+      "few-clouds",
+      "rather-cloudy",
+      "cloudy",
+      "overcast",
+    ];
+
     if (cloudy < 20) {
-      return 0;
+      return cloudNamesArray[0];
     } else if (cloudy < 40) {
-      return 1;
+      return cloudNamesArray[1];
     } else if (cloudy < 60) {
-      return 2;
+      return cloudNamesArray[2];
     } else if (cloudy < 80) {
-      return 3;
+      return cloudNamesArray[3];
     } else if (cloudy < 100) {
-      return 4;
+      return cloudNamesArray[4];
     }
 
-    return 0;
+    return cloudNamesArray[0];
   }
 
   // If input is target and enter was pressed search for input value
@@ -548,7 +558,7 @@ class App {
 
       // Displaying only 4 first results
       for (let i = 0; i < 4; i++) {
-        // Guard if cities[i] does not exist
+        // Break if cities[i] does not exist
         if (!cities[i]) break;
         suggestionsContent.appendChild(
           this.createSuggestionLiElement(cities[i], e)
