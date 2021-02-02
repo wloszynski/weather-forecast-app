@@ -296,6 +296,7 @@ class App {
   async loadData(lat, lng) {
     forecastContainer.innerHTML = '<div class="loader"></div>';
     widget.style.opacity = "0";
+    removeActiveClassFromImages();
 
     let airQuality = await this.getAirQualityData(lat, lng).then(
       (quality) => quality
