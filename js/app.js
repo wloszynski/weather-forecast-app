@@ -1,11 +1,10 @@
 "use strict";
 
-import { OWM_API_KEY } from "./config.js";
+// API KEY
+const OWM_API_KEY = "c7b5912d4d574f33e4e2e940d08f6f51";
 
 // VARIABLES FOR SEARCH
 const searchInputs = document.querySelectorAll(".search");
-const widgetSearch = document.querySelector(".search__input");
-const searchIcons = document.querySelectorAll(".search__icon");
 const searchSuggestions = document.querySelectorAll(".search__suggestions");
 
 // VARIABLES FOR WIDGET

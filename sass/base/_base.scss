@@ -9,8 +9,12 @@
 html {
   font-size: 62.5%;
 
+  @include respond(tab-port) {
+    font-size: 110%;
+  }
+
   @include respond(tab-land) {
-    font-size: 90%;
+    font-size: 80%;
   }
 }
 
