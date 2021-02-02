@@ -258,19 +258,13 @@ class App {
   mapEvent;
 
   constructor() {
-    // VARIABLES FOR CITIES LOCATIONS
-    const locations = new Array(
-      [52.409538, 16.931992],
-      [52.229676, 21.012229],
-      [60.192059, 24.945831],
-      [48.1351253, 11.5819806]
-    );
-
     // EVENT LISTENERS
+
+    // Setting load data for images from select-city div
     Array.from(citiesDiv).forEach((element, i) =>
       element.addEventListener("click", (e) => {
         if (i !== 4) {
-          this.loadData(locations[i][0], locations[i][1]);
+          this.loadData(element.dataset.lat, element.dataset.lng);
         }
       })
     );
@@ -344,7 +338,7 @@ class App {
     this.displayForecasts(weatherData);
   }
 
-  // Getting location using lat and lng -> Wroclaw, PL
+  // Getting location using lat and lng -> Wroclaw, Poland
   async getCityName(lat, lng) {
     return await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`)
       .then((response) => response.json())
@@ -373,7 +367,9 @@ class App {
         }
         this.loadData(data.latt, data.longt);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   async getWeatherData(lat, lng) {
@@ -600,8 +596,6 @@ class App {
 
   // Load map
   loadMap(lat, lng) {
-    // console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
-
     const coords = [lat, lng];
 
     this.map = L.map("map").setView(coords, this.mapZoomLevel);
