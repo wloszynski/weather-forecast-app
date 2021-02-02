@@ -343,7 +343,7 @@ class App {
   // Getting location using lat and lng -> Wroclaw, Poland
   async getCityName(lat, lng) {
     return await fetch(
-      `http://api.positionstack.com/v1/reverse?access_key=${GEO_API_KEY}&query=${lat},${lng}&limit=1&output=json`
+      `https://api.positionstack.com/v1/reverse?access_key=${GEO_API_KEY}&query=${lat},${lng}&limit=1&output=json`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -360,7 +360,7 @@ class App {
   // Getting location using from city name
   async getLocationFromName(cityName) {
     return await fetch(
-      `http://api.positionstack.com/v1/forward?access_key=${GEO_API_KEY}&query=${cityName}&limit=1&output=json`
+      `https://api.positionstack.com/v1/forward?access_key=${GEO_API_KEY}&query=${cityName}&limit=1&output=json`
     )
       .then((response) => response.json())
       .then((data) => {
