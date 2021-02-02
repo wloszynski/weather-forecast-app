@@ -52,6 +52,7 @@
           <div id="searchMobDiv" class="search nav__search">
             <i id="mobileSearch" class="fas fa-search search__icon"></i>
             <input
+              autocomplete="off"
               class="search__input"
               id="searchCityMob"
               type="text"
@@ -111,6 +112,7 @@
             <i id="desktopSearch" class="fas fa-search search__icon"></i>
 
             <input
+              autocomplete="off"
               class="search__input"
               id="searchCity"
               type="text"
@@ -120,7 +122,11 @@
           </div>
         </div>
         <div class="select-place__cities">
-          <div class="select-place__city">
+          <div
+            class="select-place__city"
+            data-lat="52.409538"
+            data-lng="16.931992"
+          >
             <div class="select-place__city-image">
               <img loading="lazy" src="./img/poznan.jpg" alt="" />
               <div class="select-place__city-name">
@@ -128,7 +134,11 @@
               </div>
             </div>
           </div>
-          <div class="select-place__city">
+          <div
+            class="select-place__city"
+            data-lat="52.229676"
+            data-lng="21.012229"
+          >
             <div class="select-place__city-image">
               <img loading="lazy" src="./img/warsaw.jpg" alt="warsaw" />
 
@@ -137,7 +147,11 @@
               </div>
             </div>
           </div>
-          <div class="select-place__city">
+          <div
+            class="select-place__city"
+            data-lat="60.192059"
+            data-lng="24.945831"
+          >
             <div class="select-place__city-image">
               <img loading="lazy" src="./img/helsinki.jpg" alt="helsinki" />
 
@@ -146,7 +160,11 @@
               </div>
             </div>
           </div>
-          <div class="select-place__city">
+          <div
+            class="select-place__city"
+            data-lat="48.1351253"
+            data-lng="11.5819806"
+          >
             <div class="select-place__city-image">
               <img loading="lazy" src="./img/munchen.jpg" alt="munchen" />
 
