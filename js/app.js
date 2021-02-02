@@ -350,7 +350,6 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const country = data.address.country || "";
         const city = data.address.city || data.address.county || "";
 
