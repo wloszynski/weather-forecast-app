@@ -370,20 +370,10 @@ class App {
     )
       .then((response) => response.json())
       .then((data) => {
-        // console.log(data[0]);
-        if (!data[0]) {
-          if (data.error.code === "018") {
-            alert("Could not find given city, try again.");
-            throw new Error("Could not find given city");
-          }
-          if (data.error.code === ("006" || "008")) {
-            alert("Request Throttled. Over Rate limit: up to 2 per sec.");
-            throw new Error(
-              "Request Throttled. Over Rate limit: up to 2 per sec."
-            );
-          }
+        if (data.error) {
+          alert("Could not find given city, try again.");
+          throw new Error("Could not find given city");
         }
-        console.log(data[0].lat, data[0].lon);
         this.loadData(data[0].lat, data[0].lon);
       })
       .catch((err) => {
