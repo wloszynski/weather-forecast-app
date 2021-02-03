@@ -10,6 +10,8 @@ import { LIQ_API_KEY, LIQ_API_URL } from "./config.js";
 
 import "./eventListeners/eventListeners.js";
 
+import { removePolishAccents } from "./util/utility.js";
+
 // VARIABLES FOR SEARCH
 const searchInputs = document.querySelectorAll(".search");
 
@@ -163,19 +165,53 @@ export default class App {
       util.removeActiveClassFromImages();
     }
 
-    // // Searching through cities only when input value length >= 2
-    // if (e.target.value.length >= 2) {
-    //   util.removeChildren(searchSuggestion);
+    // Searching through cities only when input value length >= 2
+    if (e.target.value.length >= 2) {
+      util.removeChildren(searchSuggestion);
 
-    //   searchSuggestion.appendChild(
-    //     search.createSuggestionContent(e, this.citiesArray)
-    //   );
-    // }
+      searchSuggestion.appendChild(
+        this.createSuggestionContent(e, this.citiesArray)
+      );
+    }
 
-    // if (e.target.value.length < 2) {
-    //   util.removeChildren(searchSuggestion);
-    // }
+    if (e.target.value.length < 2) {
+      util.removeChildren(searchSuggestion);
+    }
   }
+
+  // Creating search suggestion li content
+  createSuggestionLiElement = function (data, e) {
+    const city = document.createElement("LI");
+    city.classList.add("search__suggestions__item");
+    city.textContent = `${data.name}, ${data.country} `;
+    city.addEventListener("click", () => {
+      this.getLocationFromName(data.name);
+      util.clearInput(e.target);
+    });
+
+    return city;
+  };
+
+  createSuggestionContent = function (e, citiesArray) {
+    let cities = citiesArray.filter(
+      (el) =>
+        removePolishAccents(el.name)
+          .toLowerCase()
+          .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
+    );
+
+    const suggestionsContent = new DocumentFragment();
+
+    // Displaying only 4 first results
+    for (let i = 0; i < 4; i++) {
+      // Break if cities[i] does not exist
+      if (!cities[i]) break;
+      suggestionsContent.appendChild(
+        this.createSuggestionLiElement(cities[i], e)
+      );
+    }
+    return suggestionsContent;
+  };
 
   // Load leafty map
   loadMap(lat, lng) {
