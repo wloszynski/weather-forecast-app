@@ -3,7 +3,7 @@ import * as util from "../util/utility.js";
 import cloudless from "../../img/cloudless.svg";
 import few_clouds from "../../img/few-clouds.svg";
 import rather_cloudy from "../../img/rather-cloudy.svg";
-import cloudy from "../../img/cloudy.svg";
+import very_cloudy from "../../img/cloudy.svg";
 import overcast from "../../img/overcast.svg";
 
 // basic class for weather
@@ -90,7 +90,7 @@ export const checkIfCloudy = function (cloudy) {
     cloudless,
     few_clouds,
     rather_cloudy,
-    cloudy,
+    very_cloudy,
     overcast,
   ];
 
