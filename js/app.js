@@ -2,7 +2,7 @@
 
 // API KEY
 //OpenWeatherMap
-const OWM_API_KEY = "c7b5912d4d574f33e4e2e940d08f6f51";
+const OWM_API_KEY = "e634467f1f549dec38c97e5fa6acf975";
 
 // Locationiq
 const LIQ_API_KEY = "pk.b23b6c8d644bdc89cca7e8976a5e1627";
