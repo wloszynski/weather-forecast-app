@@ -3,6 +3,4 @@ node_modules
 .cache
 
 // css files
-css
-css/*
 dist

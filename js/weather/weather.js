@@ -1,5 +1,11 @@
 import * as util from "../util/utility.js";
 
+import cloudless from "../../img/cloudless.svg";
+import few_clouds from "../../img/few-clouds.svg";
+import rather_cloudy from "../../img/rather-cloudy.svg";
+import cloudy from "../../img/cloudy.svg";
+import overcast from "../../img/overcast.svg";
+
 // basic class for weather
 
 class Weather {
@@ -81,11 +87,11 @@ export function getWeatherForecastObject(
 // Checking the cloud percentage and defining which photo should be selected
 export const checkIfCloudy = function (cloudy) {
   const cloudNamesArray = [
-    "cloudless",
-    "few-clouds",
-    "rather-cloudy",
-    "cloudy",
-    "overcast",
+    cloudless,
+    few_clouds,
+    rather_cloudy,
+    cloudy,
+    overcast,
   ];
 
   if (cloudy < 20) {
