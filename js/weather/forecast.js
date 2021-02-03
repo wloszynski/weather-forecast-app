@@ -11,9 +11,7 @@ export const createForecastElement = function (data) {
               data.dt
             )}</span>
             <div class="weather-information__details__item__image">
-            <img src="./img/${checkIfCloudy(
-              data.clouds
-            )}.svg" alt="clouds percentage" />
+            <img src=${checkIfCloudy(data.clouds)} alt="clouds percentage" />
             </div>
             <span class="weather-information__details__item__temp">${
               data.temp.day > 0 ? "+" + data.temp.day : data.temp.day

@@ -26,6 +26,7 @@
     "postcss-cli": "^8.3.1"
   },
   "dependencies": {
-    "diacritic": "0.0.2"
+    "diacritic": "0.0.2",
+    "img": "^3.0.3"
   }
 }

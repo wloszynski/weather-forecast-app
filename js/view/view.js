@@ -32,7 +32,7 @@ export const displayWidget = function (weatherWidget) {
   widget.dataset.lat = weatherWidget.latlng[0];
   widget.dataset.lng = weatherWidget.latlng[1];
 
-  widgetPhoto.src = `../img/${checkIfCloudy(weatherWidget.clouds)}.svg`;
+  widgetPhoto.src = `${checkIfCloudy(weatherWidget.clouds)}`;
 };
 
 // Displaying weather forecast

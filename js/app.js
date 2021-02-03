@@ -52,7 +52,7 @@ export default class App {
       })
     );
 
-    // Adding keyup listener for checking user input
+    // Adding keyup listener for ng user input
     Array.from(searchInputs).forEach((element, i) =>
       element.addEventListener("keyup", (e) => {
         this.checkPressedKey(e);
