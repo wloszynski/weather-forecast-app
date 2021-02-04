@@ -1,6 +1,6 @@
 import "regenerator-runtime/runtime";
 
-import App from "./app.js";
 import "./util/theme.js";
+import App from "./app.js";
 
 new App();

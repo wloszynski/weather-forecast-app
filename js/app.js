@@ -3,14 +3,11 @@
 import * as model from "./model.js";
 import * as weather from "./weather/weather.js";
 import * as util from "./util/utility.js";
-import * as search from "./util/search.js";
 import * as view from "./view/view.js";
 
-import { LIQ_API_KEY, LIQ_API_URL } from "./config.js";
+import { MAP_ZOOM, DEFAULT_COORDS, SUGGESTIONS_LIMIT } from "./config.js";
 
 import "./eventListeners/eventListeners.js";
-
-import { removePolishAccents } from "./util/utility.js";
 
 // VARIABLES FOR SEARCH
 const searchInputs = document.querySelectorAll(".search");
@@ -25,7 +22,7 @@ const forecastContainer = document.querySelector(
 );
 
 // VARIABLES FOR IMAGES
-const citiesDiv = document.querySelectorAll(".select-place__city");
+const cityContainers = document.querySelectorAll(".select-place__city");
 
 // VARIABLES FOR MAP
 const mapContainer = document.querySelector(".map");
@@ -46,7 +43,7 @@ export default class App {
     // EVENT LISTENERS
 
     // Setting load data for images from select-city div
-    Array.from(citiesDiv).forEach((element, i) =>
+    Array.from(cityContainers).forEach((element, i) =>
       element.addEventListener("click", (e) => {
         if (i !== 4) {
           this.loadData(element.dataset.lat, element.dataset.lng);
@@ -67,83 +64,63 @@ export default class App {
     // Get user position and print data
     this.getPosition();
 
-    // Fetch cities from world-cities API
-    this.loadCities();
+    // Setting up Array with cities' names
+    this.setupCitiesArray();
 
     // Load map for Poznan
-    this.loadMap(52.409538, 16.931992);
-  }
-
-  async loadCities() {
-    this.citiesArray = await fetch(
-      `https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      })
-      .catch((err) => console.error(err));
+    this.loadMap(...DEFAULT_COORDS);
   }
 
   // Getting user position -> lat and lng
-  getPosition() {
+  async getPosition() {
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
-        this.convertGeolocationItemToCoords.bind(this),
+        this.loadDataFromCurrentPosition.bind(this),
         () => {
-          // If failed load data for Poznan
-          this.loadData(52.409538, 16.931992);
+          // If failed load data for DEFAULT_COORDS
+          this.loadData(...DEFAULT_COORDS);
         }
       );
   }
 
+  // Fetch cities from world-cities API
+  async setupCitiesArray() {
+    this.citiesArray = await model.loadCities();
+  }
+
   // Success fall back for getPosition()
-  convertGeolocationItemToCoords(position) {
+  loadDataFromCurrentPosition(position) {
     this.loadData(position.coords.latitude, position.coords.longitude);
   }
 
   // Loading data -> weather, location, forecast,
   async loadData(lat, lng) {
-    util.removeChildren(forecastContainer);
-    forecastContainer.insertAdjacentHTML(
-      "afterbegin",
-      '<div class="loader"></div>'
-    );
-    widget.style.opacity = "0";
+    util.loadingSpinnerInElement(forecastContainer);
+
+    util.hideElementOpacity(widget);
 
     util.removeActiveClassFromImages();
 
-    let location = await model.getCityName(lat, lng).then((loc) => loc);
+    const location = await model.getCityName(lat, lng).then((loc) => loc);
 
-    let airQuality = await model
-      .getAirQualityData(lat, lng)
-      .then((quality) => quality);
+    const [airQuality, weatherData] = await Promise.all([
+      await model.getAirQualityData(lat, lng).then((quality) => quality),
+      await model.getWeatherData(lat, lng),
+    ]);
 
-    const weatherData = await model.getWeatherData(lat, lng);
-
+    // Display data in widget
     view.displayWidget(
       weather.getWeatherWidgetObject(weatherData, location, airQuality)
     );
 
+    // Display data in forecast information
     view.displayForecasts(weatherData);
   }
 
   // Getting location using from city name
-  async getLocationFromName(cityName) {
-    return await fetch(
-      `${LIQ_API_URL}/search.php?key=${LIQ_API_KEY}&format=json&q=${cityName}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          alert("Could not find given city, try again.");
-          throw new Error("Could not find given city");
-        }
-        this.loadData(data[0].lat, data[0].lon);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async loadDataFromCityName(cityName) {
+    const coords = await model.getCoordsFromCityName(cityName);
+    await this.loadData(...coords);
   }
 
   // If input is target and enter was pressed search for input value
@@ -160,50 +137,56 @@ export default class App {
         return;
       }
 
-      await this.getLocationFromName(e.target.value);
+      await this.loadDataFromCityName(e.target.value);
       util.clearInput(e.target);
       util.removeActiveClassFromImages();
+    }
+
+    // For clearing search suggestions
+    if (e.target.value.length < 2) {
+      util.removeChildren(searchSuggestion);
     }
 
     // Searching through cities only when input value length >= 2
     if (e.target.value.length >= 2) {
       util.removeChildren(searchSuggestion);
 
+      // Display search suggestions
       searchSuggestion.appendChild(
         this.createSuggestionContent(e, this.citiesArray)
       );
     }
-
-    if (e.target.value.length < 2) {
-      util.removeChildren(searchSuggestion);
-    }
   }
 
   // Creating search suggestion li content
-  createSuggestionLiElement = function (data, e) {
+  createSuggestionLiElement(data, e) {
     const city = document.createElement("LI");
     city.classList.add("search__suggestions__item");
     city.textContent = `${data.name}, ${data.country} `;
     city.addEventListener("click", () => {
-      this.getLocationFromName(data.name);
+      // Load data from location name
+      this.loadDataFromCityName(data.name);
+
+      // Clear input
       util.clearInput(e.target);
     });
 
     return city;
-  };
+  }
 
-  createSuggestionContent = function (e, citiesArray) {
+  createSuggestionContent(e, citiesArray) {
     let cities = citiesArray.filter(
       (el) =>
-        removePolishAccents(el.name)
+        util
+          .removePolishAccents(el.name)
           .toLowerCase()
-          .search(removePolishAccents(e.target.value.toLowerCase())) !== -1
+          .search(util.removePolishAccents(e.target.value.toLowerCase())) !== -1
     );
 
     const suggestionsContent = new DocumentFragment();
 
     // Displaying only 4 first results
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < SUGGESTIONS_LIMIT; i++) {
       // Break if cities[i] does not exist
       if (!cities[i]) break;
       suggestionsContent.appendChild(
@@ -211,13 +194,13 @@ export default class App {
       );
     }
     return suggestionsContent;
-  };
+  }
 
   // Load leafty map
   loadMap(lat, lng) {
     const coords = [lat, lng];
 
-    this.map = L.map("map").setView(coords, 13);
+    this.map = L.map("map").setView(coords, MAP_ZOOM);
 
     L.tileLayer("https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
       attribution:
