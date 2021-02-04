@@ -9,13 +9,14 @@ const gradientBg = document.querySelector(".gradientBg");
 
 // Logo as theme switch
 document.querySelector("#logo").addEventListener("click", () => {
-  // background-image: url("../img/windows_wallpaper.jpg");
-  if (aside.style.backgroundImage === `url(${light_sky})`) {
+  if (aside.style.backgroundImage === `url("${light_sky}")`) {
     aside.style.backgroundImage = `url(${dark_sky})`;
+
     aside.style.color = "white";
     gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
   } else {
-    aside.style.backgroundImage = `url(${light_sky})`;
+    aside.style.backgroundImage = `url("${light_sky}")`;
+
     aside.style.color = "#0008";
     gradientBg.style.background = "linear-gradient(to top,#008cbc,#b1dee8)";
   }
