@@ -12,7 +12,8 @@
     "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
     "startParcel": "parcel index.html",
-    "buildParcel": "parcel build index.html"
+    "buildParcel": "parcel build index.html",
+    "buildProduction": "npm-run-all build:css buildParcel"
   },
   "author": "",
   "license": "ISC",
