@@ -5,6 +5,17 @@ import {
   LIQ_API_URL,
 } from "./config.js";
 
+export const loadCities = async function () {
+  return fetch(
+    `https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => console.error(err));
+};
+
 // Getting location using lat and lng -> Wroclaw, Poland
 export const getCityName = async function (lat, lng) {
   return await fetch(
