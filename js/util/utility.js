@@ -78,3 +78,10 @@ export const loadingSpinnerInElement = function (element) {
 export const hideElementOpacity = function (element) {
   element.style.opacity = 0;
 };
+
+export const drawRandomImage = async function () {
+  const data = await fetch(
+    "https://source.unsplash.com/random/1920x1080?city,village"
+  );
+  return data.url;
+};

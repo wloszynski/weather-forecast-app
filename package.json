@@ -12,7 +12,7 @@
     "startParcel": "parcel index.html",
     "buildParcel": "parcel build index.html",
     "buildProduction": "npm-run-all build:css buildParcel",
-    "start": "npm-run-all --parallel startParcel watch:sass"
+    "start": "npm-run-all --parallel  watch:sass startParcel"
   },
   "author": "",
   "license": "ISC",

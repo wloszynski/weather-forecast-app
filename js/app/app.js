@@ -7,6 +7,8 @@ import { DEFAULT_COORDS, DRAW_RANDOM_IMG } from "../config";
 import { createSuggestionContent } from "../util/search";
 import { Map } from "../map/map";
 
+import { setCustomCity } from "../customCity/customCity";
+
 import "../eventListeners/eventListeners.js";
 
 // VARIABLES FOR SEARCH
@@ -21,15 +23,10 @@ const cityContainers = document.querySelectorAll(".select-place__city");
 
 // VARIABLES FOR ADDING CURRENT(CUSTOM) CITY
 const customCity = document.querySelector(".custom-city");
-const customCityImg = document.querySelector(".custom-city__img");
-const customCityName = document.querySelector(".custom-city__name");
 
 export default class App {
-  // weather variables
+  // Cities names' array
   citiesArray;
-
-  // variable for map
-  #map;
 
   constructor() {
     // EVENT LISTENERS
@@ -51,7 +48,7 @@ export default class App {
     );
 
     // Adding event listener of click on custom city
-    customCity.addEventListener("click", this.setCustomCity);
+    customCity.addEventListener("click", setCustomCity);
 
     // Get user position and print data
     this.getPosition();
@@ -60,7 +57,7 @@ export default class App {
     this.setupCitiesArray();
 
     // Load map for Poznan
-    this.#map = new Map(...DEFAULT_COORDS);
+    new Map(...DEFAULT_COORDS);
   }
 
   // Getting user position -> lat and lng
@@ -119,21 +116,4 @@ export default class App {
       );
     }
   }
-
-  // Setting custom city
-  setCustomCity = () => {
-    customCityName.textContent = widgetLocation.textContent;
-    [customCity.dataset.lat, customCity.dataset.lng] = [
-      widget.dataset.lat,
-      widget.dataset.lng,
-    ];
-    customCityImg.src = DRAW_RANDOM_IMG;
-    customCityImg.alt = customCity.textContent;
-    customCity.removeEventListener("click", this.setCustomCity);
-
-    // Get location data when clicked on image
-    customCity.addEventListener("click", () => {
-      model.loadData(customCity.dataset.lat, customCity.dataset.lng);
-    });
-  };
 }
