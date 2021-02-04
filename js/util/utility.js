@@ -69,3 +69,12 @@ export const removeActiveClassFromImages = () => {
     el.querySelector(".select-place__city-image").classList.remove("active");
   });
 };
+
+export const loadingSpinnerInElement = function (element) {
+  removeChildren(element);
+  element.insertAdjacentHTML("afterbegin", '<div class="loader"></div>');
+};
+
+export const hideElementOpacity = function (element) {
+  element.style.opacity = 0;
+};
