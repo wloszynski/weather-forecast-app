@@ -5,13 +5,7 @@ import * as weather from "./weather/weather.js";
 import * as util from "./util/utility.js";
 import * as view from "./view/view.js";
 
-import {
-  LIQ_API_KEY,
-  LIQ_API_URL,
-  MAP_ZOOM,
-  DEFAULT_COORDS,
-  SUGGESTIONS_LIMIT,
-} from "./config.js";
+import { MAP_ZOOM, DEFAULT_COORDS, SUGGESTIONS_LIMIT } from "./config.js";
 
 import "./eventListeners/eventListeners.js";
 
@@ -28,7 +22,7 @@ const forecastContainer = document.querySelector(
 );
 
 // VARIABLES FOR IMAGES
-const citiesDiv = document.querySelectorAll(".select-place__city");
+const cityContainers = document.querySelectorAll(".select-place__city");
 
 // VARIABLES FOR MAP
 const mapContainer = document.querySelector(".map");
@@ -49,7 +43,7 @@ export default class App {
     // EVENT LISTENERS
 
     // Setting load data for images from select-city div
-    Array.from(citiesDiv).forEach((element, i) =>
+    Array.from(cityContainers).forEach((element, i) =>
       element.addEventListener("click", (e) => {
         if (i !== 4) {
           this.loadData(element.dataset.lat, element.dataset.lng);
@@ -124,21 +118,9 @@ export default class App {
   }
 
   // Getting location using from city name
-  async getLocationFromName(cityName) {
-    return await fetch(
-      `${LIQ_API_URL}/search.php?key=${LIQ_API_KEY}&format=json&q=${cityName}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.error) {
-          alert("Could not find given city, try again.");
-          throw new Error("Could not find given city");
-        }
-        this.loadData(data[0].lat, data[0].lon);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  async loadDataFromCityName(cityName) {
+    const coords = await model.getCoordsFromCityName(cityName);
+    await this.loadData(...coords);
   }
 
   // If input is target and enter was pressed search for input value
@@ -155,7 +137,7 @@ export default class App {
         return;
       }
 
-      await this.getLocationFromName(e.target.value);
+      await this.loadDataFromCityName(e.target.value);
       util.clearInput(e.target);
       util.removeActiveClassFromImages();
     }
@@ -183,7 +165,7 @@ export default class App {
     city.textContent = `${data.name}, ${data.country} `;
     city.addEventListener("click", () => {
       // Load data from location name
-      this.getLocationFromName(data.name);
+      this.loadDataFromCityName(data.name);
 
       // Clear input
       util.clearInput(e.target);

@@ -16,6 +16,23 @@ export const loadCities = async function () {
     .catch((err) => console.error(err));
 };
 
+export const getCoordsFromCityName = async function (cityName) {
+  return await fetch(
+    `${LIQ_API_URL}/search.php?key=${LIQ_API_KEY}&format=json&q=${cityName}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        alert("Could not find given city, try again.");
+        throw new Error("Could not find given city");
+      }
+      return [data[0].lat, data[0].lon];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 // Getting location using lat and lng -> Wroclaw, Poland
 export const getCityName = async function (lat, lng) {
   return await fetch(
