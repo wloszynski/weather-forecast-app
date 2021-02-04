@@ -4,16 +4,15 @@
   "description": "weather-fsecure",
   "main": "index.js",
   "scripts": {
-    "devserver": "live-server",
     "watch:sass": "node-sass ./sass/main.scss ./css/style.css -w",
-    "start": "npm-run-all --parallel devserver watch:sass",
     "compile:sass": "node-sass ./sass/main.scss ./css/style.comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.comp.css -o css/style.prefix.css",
     "compress:css": "node-sass css/style.prefix.css css/style.css --output-style compressed",
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
     "startParcel": "parcel index.html",
     "buildParcel": "parcel build index.html",
-    "buildProduction": "npm-run-all build:css buildParcel"
+    "buildProduction": "npm-run-all build:css buildParcel",
+    "start": "npm-run-all --parallel startParcel watch:sass"
   },
   "author": "",
   "license": "ISC",
