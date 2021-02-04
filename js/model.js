@@ -90,14 +90,3 @@ export const getAirQualityData = async function (lat, lng) {
     })
     .catch((err) => console.error(err));
 };
-
-// export const loadCities = async function () {
-//   this.citiesArray = await fetch(
-//     `https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json`
-//   )
-//     .then((response) => response.json())
-//     .then((data) => {
-//       return data;
-//     })
-//     .catch((err) => console.error(err));
-// };
