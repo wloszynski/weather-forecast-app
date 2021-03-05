@@ -1,4 +1,4 @@
-# weather-app-fsecure
+# weather-forecast-app
 
 To run a website on your local machine:
 
