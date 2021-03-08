@@ -14,7 +14,7 @@ const widget = document.querySelector(".widget");
 
 // Loading Cities' names for search suggestions
 export const loadCities = async function () {
-  return fetch(`${NODE_API_URL}/cities`, {})
+  return fetch(`${NODE_API_URL}/cities`)
     .then((response) => {
       return response.json();
     })
