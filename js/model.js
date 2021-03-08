@@ -19,12 +19,12 @@ const widget = document.querySelector(".widget");
 
 // Loading Cities' names for search suggestions
 export const loadCities = async function () {
-  return fetch(
-    `https://pkgstore.datahub.io/core/world-cities/world-cities_json/data/5b3dd46ad10990bca47b04b4739a02ba/world-cities_json.json`
-  )
-    .then((response) => response.json())
+  return fetch(`http://localhost:3000/cities`, {})
+    .then((response) => {
+      return response.json();
+    })
     .then((data) => {
-      return data;
+      return data.cities;
     })
     .catch((err) => console.error(err));
 };
