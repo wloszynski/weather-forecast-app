@@ -85,3 +85,11 @@ export const drawRandomImage = async function () {
   );
   return data.url;
 };
+
+export const resetThingsForLoadingSpinner = (forecastContainer, widget) => {
+  loadingSpinnerInElement(forecastContainer);
+
+  hideElementOpacity(widget);
+
+  removeActiveClassFromImages();
+};

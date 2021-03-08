@@ -1,10 +1,4 @@
-import {
-  OWM_API_KEY,
-  OWM_API_URL,
-  LIQ_API_KEY,
-  LIQ_API_URL,
-  NODE_API_URL,
-} from "./config.js";
+import { LIQ_API_KEY, LIQ_API_URL, NODE_API_URL } from "./config.js";
 
 import * as weather from "./weather/weather";
 import * as view from "./view/view";
@@ -79,13 +73,21 @@ export const getWeatherData = async function (lat, lng) {
     .catch((err) => console.error(err));
 };
 
+// Get weather data for given lat and lng
+export const getWeatherDataFromCityName = async function (cityName) {
+  return await fetch(`${NODE_API_URL}/weather/name/${cityName}`)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((err) => console.error(err));
+};
+
 // Loading data -> weather, location, forecast,
 export const loadData = async function (lat, lng) {
-  util.loadingSpinnerInElement(forecastContainer);
-
-  util.hideElementOpacity(widget);
-
-  util.removeActiveClassFromImages();
+  util.resetThingsForLoadingSpinner(forecastContainer, widget);
 
   const data = await getWeatherData(lat, lng);
 
@@ -102,8 +104,21 @@ export const loadData = async function (lat, lng) {
   view.displayForecasts(data.weatherData);
 };
 
-// Getting location using from city name
+// Loading data from city name
 export const loadDataFromCityName = async function (cityName) {
-  const coords = await getCoordsFromCityName(cityName);
-  await loadData(...coords);
+  util.resetThingsForLoadingSpinner(forecastContainer, widget);
+
+  const data = await getWeatherDataFromCityName(cityName);
+
+  // Display data in widget
+  view.displayWidget(
+    weather.getWeatherWidgetObject(
+      data.weatherData,
+      data.location,
+      data.airQuality
+    )
+  );
+
+  // Display data in forecast information
+  view.displayForecasts(data.weatherData);
 };
