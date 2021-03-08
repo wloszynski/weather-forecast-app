@@ -86,7 +86,7 @@ export const drawRandomImage = async function () {
   return data.url;
 };
 
-export const resetThingsForLoadingSpinner = (forecastContainer, widget) => {
+export const resetThingForLoadingData = (forecastContainer, widget) => {
   loadingSpinnerInElement(forecastContainer);
 
   hideElementOpacity(widget);

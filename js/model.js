@@ -87,7 +87,7 @@ export const getWeatherDataFromCityName = async function (cityName) {
 
 // Loading data -> weather, location, forecast,
 export const loadData = async function (lat, lng) {
-  util.resetThingsForLoadingSpinner(forecastContainer, widget);
+  util.resetThingForLoadingData(forecastContainer, widget);
 
   const data = await getWeatherData(lat, lng);
 
@@ -106,7 +106,7 @@ export const loadData = async function (lat, lng) {
 
 // Loading data from city name
 export const loadDataFromCityName = async function (cityName) {
-  util.resetThingsForLoadingSpinner(forecastContainer, widget);
+  util.resetThingForLoadingData(forecastContainer, widget);
 
   const data = await getWeatherDataFromCityName(cityName);
 
