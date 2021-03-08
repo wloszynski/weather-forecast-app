@@ -8,13 +8,15 @@ const aside = document.querySelector(".aside");
 const gradientBg = document.querySelector(".gradientBg");
 
 // Logo as theme switch
-document.querySelector("#logo").addEventListener("click", () => {
+document.querySelector("#logo").addEventListener("click", (e) => {
   if (aside.style.backgroundImage === `url("${light_sky}")`) {
+    e.target.style = "transform: rotate(0deg)";
     aside.style.backgroundImage = `url(${dark_sky})`;
-
     aside.style.color = "white";
     gradientBg.style.background = "linear-gradient(to top,#004e92,#000428)";
   } else {
+    e.target.style = "transform: rotate(180deg)";
+
     aside.style.backgroundImage = `url("${light_sky}")`;
 
     aside.style.color = "#0008";

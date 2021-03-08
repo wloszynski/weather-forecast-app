@@ -9,7 +9,7 @@ const createSuggestionLiElement = function (data, e) {
   city.textContent = `${data.name}, ${data.country} `;
   city.addEventListener("click", () => {
     // Load data from location name
-    loadDataFromCityName(data.name);
+    loadDataFromCityName(util.removeAccents(data.name));
 
     // Clear input
     util.clearInput(e.target);
@@ -22,9 +22,9 @@ export const createSuggestionContent = function (e, citiesArray) {
   let cities = citiesArray.filter(
     (el) =>
       util
-        .removePolishAccents(el.name)
+        .removeAccents(el.name)
         .toLowerCase()
-        .search(util.removePolishAccents(e.target.value.toLowerCase())) !== -1
+        .search(util.removeAccents(e.target.value.toLowerCase())) !== -1
   );
 
   const suggestionsContent = new DocumentFragment();

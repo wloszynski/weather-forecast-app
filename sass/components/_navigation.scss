@@ -11,12 +11,12 @@
   #logo {
     height: 4rem;
     padding: 0.2rem;
-    transition: all 0.3s;
+    transition: all 1s;
     cursor: pointer;
-    animation: goOut 0.7s 7s 6;
-
     & img {
+      transform: rotate(180deg);
       height: 100%;
+      transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
   }
 

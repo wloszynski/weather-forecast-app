@@ -1,9 +1,11 @@
+import { NODE_API_URL } from "../config";
+
 const citiesDiv = document.querySelectorAll(".select-place__city");
 
 // UTILITY FUNCTIONS
 
 // Replacing polish characters to latin
-export const removePolishAccents = (string) => {
+export const removeAccents = (string) => {
   const accents =
     "ÀÁÂÃÄÅĄàáâãäåąßÒÓÔÕÕÖØÓòóôõöøóÈÉÊËĘèéêëęðÇĆçćÐÌÍÎÏìíîïÙÚÛÜùúûüÑŃñńŠŚšśŸÿýŽŻŹžżź";
   const accentsOut =
@@ -80,8 +82,16 @@ export const hideElementOpacity = function (element) {
 };
 
 export const drawRandomImage = async function () {
-  const data = await fetch(
-    "https://source.unsplash.com/random/1920x1080?city,village"
-  );
-  return data.url;
+  const randomImageUrl = await fetch(
+    `${NODE_API_URL}/randomImageUrl`
+  ).then((response) => response.json());
+  return randomImageUrl.url;
+};
+
+export const resetThingForLoadingData = (forecastContainer, widget) => {
+  loadingSpinnerInElement(forecastContainer);
+
+  hideElementOpacity(widget);
+
+  removeActiveClassFromImages();
 };
