@@ -82,7 +82,10 @@ export const hideElementOpacity = function (element) {
 };
 
 export const drawRandomImage = async function () {
-  const randomImageUrl = await fetch(`${NODE_API_URL}/randomImageUrl`);
+  const randomImageUrl = await fetch(
+    `${NODE_API_URL}/randomImageUrl`
+  ).then((response) => response.json());
+  console.log(randomImageUrl);
   return randomImageUrl.url;
 };
 
