@@ -24,4 +24,4 @@ export const SUGGESTIONS_LIMIT = 4;
 export const DRAW_RANDOM_IMG =
   "https://source.unsplash.com/random/1920x1080?city,village";
 
-export const NODE_API_URL = "http://localhost:3000";
+export const NODE_API_URL = "https://w-forecast-app-node-api.herokuapp.com";
