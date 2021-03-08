@@ -24,43 +24,6 @@ export const loadCities = async function () {
     .catch((err) => console.error(err));
 };
 
-// Get coords from given city name
-export const getCoordsFromCityName = async function (cityName) {
-  return await fetch(
-    `${LIQ_API_URL}/search.php?key=${LIQ_API_KEY}&format=json&q=${cityName}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        alert("Could not find given city, try again.");
-        throw new Error("Could not find given city");
-      }
-      return [data[0].lat, data[0].lon];
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
-
-// Getting location using lat and lng -> Wroclaw, Poland
-export const getCityName = async function (lat, lng) {
-  return await fetch(
-    `${LIQ_API_URL}/reverse.php?key=${LIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const country = data.address.country || "";
-      const city = data.address.city || data.address.county || "";
-
-      if (city) {
-        return `${city}, ${country}`;
-      }
-
-      return `${country}`;
-    })
-    .catch((err) => console.error(err));
-};
-
 // Get weather data for given lat and lng
 export const getWeatherData = async function (lat, lng) {
   return await fetch(`${NODE_API_URL}/weather/coords/lat=${lat}&lng=${lng}`)
