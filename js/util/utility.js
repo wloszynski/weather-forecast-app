@@ -5,7 +5,7 @@ const citiesDiv = document.querySelectorAll(".select-place__city");
 // UTILITY FUNCTIONS
 
 // Replacing polish characters to latin
-export const removePolishAccents = (string) => {
+export const removeAccents = (string) => {
   const accents =
     "ÀÁÂÃÄÅĄàáâãäåąßÒÓÔÕÕÖØÓòóôõöøóÈÉÊËĘèéêëęðÇĆçćÐÌÍÎÏìíîïÙÚÛÜùúûüÑŃñńŠŚšśŸÿýŽŻŹžżź";
   const accentsOut =
